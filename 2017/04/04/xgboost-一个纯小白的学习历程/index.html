@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://images.cnitblog.com/blog/571227/201412/121628452909401.png">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530164744149-143494562.jpg">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530163025555-653522936.jpg">
-<meta property="og:updated_time" content="2017-04-04T14:38:41.574Z">
+<meta property="og:updated_time" content="2017-04-04T14:49:46.499Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
 <meta name="twitter:description" content="xgboost：一个纯小白的学习历程 标签（空格分隔）： 机器学习 决策树 xgboost GBDT  短短三天，一开始对决策树都深感陌生的我在网上进行一番“扫荡”之后，研读了相关的技术博客，对各种名词进行了深度了解，也陆陆续续整理了自己的思路，接下来就谈谈这几天我都经历了什么吧~为了能对xgboost有一个更好的认识，我还是把之前看过又有些遗忘的书《数据挖掘原理与实践》拿出来翻一翻，其中第3章中">
@@ -72,7 +72,7 @@
         <section id="main"><article id="post-xgboost-一个纯小白的学习历程" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/04/04/xgboost-一个纯小白的学习历程/" class="article-date">
-  <time datetime="2017-04-04T14:38:06.017Z" itemprop="datePublished">2017-04-04</time>
+  <time datetime="2017-04-04T14:49:41.921Z" itemprop="datePublished">2017-04-04</time>
 </a>
     
   </div>
@@ -86,8 +86,7 @@
 <hr>
 <p>短短三天，一开始对决策树都深感陌生的我在网上进行一番“扫荡”之后，研读了相关的技术博客，对各种名词进行了深度了解，也陆陆续续整理了自己的思路，接下来就谈谈这几天我都经历了什么吧~<br>为了能对xgboost有一个更好的认识，我还是把之前看过又有些遗忘的书《数据挖掘原理与实践》拿出来翻一翻，其中第3章中对于决策树的基本概念、构建及其三种算法都有较详细的解说<a href="https://www.amazon.cn/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E8%92%8B%E7%9B%9B%E7%9B%8A/dp/B005M1LXLC" target="_blank" rel="external">如想了解此书，可点击此处</a>，接下来我将对这三部分进行简要的阐述：</p>
 <p>##决策树</p>
-<h5 id="1-决策树的基本概念"><a href="#1-决策树的基本概念" class="headerlink" title="1. 决策树的基本概念"></a>1. 决策树的基本概念</h5><pre><code>决策树（Decision Tree）是一种树型结构，包括决策节点（内部节点）、分支和叶节点三部分。作为一个预测模型，它代表的是对象属性与对象值之间的一种映射关系。树中每个节点表示某个对象，而每个分叉路径则代表的某个可能的属性值，而每个叶结点则对应从根节点到该叶节点所经历的路径所表示的对象的值。看图可能会更容易☟☟☟☟☟
-</code></pre><p><img src="http://7xiht5.com1.z0.glb.clouddn.com/blog_animal_classification.png" alt="图解"><br>    决策树可以用来对未知样本进行分类，分类过程如下：从决策树的根节点开始，从上往下沿着某个分支往下搜索，直到叶节点，以叶节点的类标号值作为该未知样本所属类标号。</p>
+<h5 id="1-决策树的基本概念"><a href="#1-决策树的基本概念" class="headerlink" title="1. 决策树的基本概念"></a>1. 决策树的基本概念</h5><p> 决策树（Decision Tree）是一种树型结构，包括决策节点（内部节点）、分支和叶节点三部分。作为一个预测模型，它代表的是对象属性与对象值之间的一种映射关系。树中每个节点表示某个对象，而每个分叉路径则代表的某个可能的属性值，而每个叶结点则对应从根节点到该叶节点所经历的路径所表示的对象的值。看图可能会更容易☟☟☟☟☟<br><img src="http://7xiht5.com1.z0.glb.clouddn.com/blog_animal_classification.png" alt="图解"><br>    决策树可以用来对未知样本进行分类，分类过程如下：从决策树的根节点开始，从上往下沿着某个分支往下搜索，直到叶节点，以叶节点的类标号值作为该未知样本所属类标号。</p>
 <p>#####2. 决策树的构建<br> 构建过程中主要考虑两方面：<br>    （1）选合适的属性作为决策树的节点<br>    （2）在适当的位置停止划分过程</p>
 <p>#####3. 经典算法<br>    主要有ID3算法（Iterative Dichotomiser 3）、C4.5算法、CART算法(分类回归树)以及Random Forest，下面通过表格来对这4个算法进行了解吧！~<br>|分类算法|属性选择标准|使用方法|特点|<br>|——-|————|——–|—–|—–|—–|<br>| ID3|信息增益|自顶向下的贪心策略|只能处理分类属性数据，划分过程中容易由于子集规模过小造成统计特征不充分而停止，其属性选择标准可能导致过度拟合。<br>| C4.5|信息增益率|悲观剪枝|可为多叉树，输出变量只能是分类型，能够处理连续型和离散型属性数据，对缺失值的数据直接分配到概率最大的分支，会对生成的树进行后剪枝处理。但在构造过程中需对数据集进行多次的顺序扫描和排序，且产生的决策树不够稳定。<br>| CART|Gini系数|二元递归划分方法/代价复杂性剪枝法|构成的是一个二叉树，输入和输出变量可为分类型或数值型，它在每一步的决策时只能是“是”或者“否”,采用代理测试处理缺失值，采用预剪枝和后剪枝相结合的方式剪枝<br>|Random Forest| 随机 |随机选择方法   |  包含多个决策树的分类器,每棵决策树之间是没有关联的,不会产生过拟合的现象，容易实现并行化计算。<br>补充知识点：<br>１.信息熵（）：其定义为离散随机事件出现的概率，一个系统越是有序，信息熵就越低，反之一个系统越是混乱，它的信息熵就越高。可以被认为是系统有序化程度的一个度量。<br>２.信息增益：针对一个一个特征而言的，就是看一个特征，系统有它和没有它时的信息量各是多少，两者的差值就是这个特征给系统带来的信息增益。其容易偏向取值较多的属性。<br><img src="http://images.cnitblog.com/blog/571227/201412/121628452909401.png" alt="信息增益计算公式"><br>3.上述算法仅仅是个简单介绍，具体的可以<a href="http://blog.csdn.net/luo123n/article/details/50149403" target="_blank" rel="external">点击此处进行深入了解</a></p>
 <p>对于决策树我们也有了进一步的了解，那么接下来就来看看xgboost是一个怎样的存在吧~不过深入了解之前我们稍微认识一下xgboost的前生GDBT~</p>
@@ -106,7 +105,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/04/xgboost-一个纯小白的学习历程/" data-id="cj13noia60001osaebb897hwz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/04/xgboost-一个纯小白的学习历程/" data-id="cj13nvxbn0001scaekbxis9lf" class="article-share-link">Share</a>
       
       
     </footer>
