@@ -1,0 +1,737 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="过了一个舒服的新年假期，可以继续卯足劲干活了~说实话还是有挺大收获的，之前在家休息时写过一篇关于Hadoop的博客，讲的Hadoop的简介、安装以及其两大重点：HDFS和MapReduce,这则博客则分享一下如何利用Hadoop的MApReduce去提取网页元素，一步步如何去攻克~（这是基于本机安装好Hadoop的情况下，如果还没安装可以参考我上一篇关于Hadoop的博客） Hadoop应用步骤第">
+<meta name="keywords" content="Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop应用实例：提取网页元素">
+<meta property="og:url" content="http://yoursite.com/2017/02/15/Hadoop应用实例：提取网页元素/index.html">
+<meta property="og:site_name" content="DilicelSten's blog">
+<meta property="og:description" content="过了一个舒服的新年假期，可以继续卯足劲干活了~说实话还是有挺大收获的，之前在家休息时写过一篇关于Hadoop的博客，讲的Hadoop的简介、安装以及其两大重点：HDFS和MapReduce,这则博客则分享一下如何利用Hadoop的MApReduce去提取网页元素，一步步如何去攻克~（这是基于本机安装好Hadoop的情况下，如果还没安装可以参考我上一篇关于Hadoop的博客） Hadoop应用步骤第">
+<meta property="og:image" content="http://cdn.powerxing.com/imgs/hadoop-build-project-using-eclipse-06.png">
+<meta property="og:image" content="http://cdn.powerxing.com/imgs/hadoop-build-project-using-eclipse-07.png">
+<meta property="og:image" content="http://cdn.powerxing.com/imgs/hadoop-build-project-using-eclipse-08.png">
+<meta property="og:updated_time" content="2017-04-06T15:47:54.143Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop应用实例：提取网页元素">
+<meta name="twitter:description" content="过了一个舒服的新年假期，可以继续卯足劲干活了~说实话还是有挺大收获的，之前在家休息时写过一篇关于Hadoop的博客，讲的Hadoop的简介、安装以及其两大重点：HDFS和MapReduce,这则博客则分享一下如何利用Hadoop的MApReduce去提取网页元素，一步步如何去攻克~（这是基于本机安装好Hadoop的情况下，如果还没安装可以参考我上一篇关于Hadoop的博客） Hadoop应用步骤第">
+<meta name="twitter:image" content="http://cdn.powerxing.com/imgs/hadoop-build-project-using-eclipse-06.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/15/Hadoop应用实例：提取网页元素/"/>
+
+
+
+
+
+  <title> Hadoop应用实例：提取网页元素 | DilicelSten's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DilicelSten's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/15/Hadoop应用实例：提取网页元素/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DilicelSten">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DilicelSten's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hadoop应用实例：提取网页元素
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-15T09:37:57+08:00">
+                2017-02-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>过了一个舒服的新年假期，可以继续卯足劲干活了~说实话还是有挺大收获的，之前在家休息时写过一篇关于Hadoop的博客，讲的Hadoop的简介、安装以及其两大重点：HDFS和MapReduce,这则博客则分享一下如何利用Hadoop的MApReduce去提取网页元素，一步步如何去攻克~（这是基于本机安装好Hadoop的情况下，如果还没安装可以参考我上一篇关于Hadoop的博客）</p>
+<h2 id="Hadoop应用步骤"><a href="#Hadoop应用步骤" class="headerlink" title="Hadoop应用步骤"></a>Hadoop应用步骤</h2><h4 id="第一：切换-Map-Reduce-开发视图，选择-Window-菜单下选择-Open-Perspective-gt-Other，弹出一个窗体，从中选择-Map-Reduce-选项即可进行切换。"><a href="#第一：切换-Map-Reduce-开发视图，选择-Window-菜单下选择-Open-Perspective-gt-Other，弹出一个窗体，从中选择-Map-Reduce-选项即可进行切换。" class="headerlink" title="第一：切换 Map/Reduce 开发视图，选择 Window 菜单下选择 Open Perspective -&gt; Other，弹出一个窗体，从中选择 Map/Reduce 选项即可进行切换。"></a>第一：切换 Map/Reduce 开发视图，选择 Window 菜单下选择 Open Perspective -&gt; Other，弹出一个窗体，从中选择 Map/Reduce 选项即可进行切换。</h4><p><img src="http://cdn.powerxing.com/imgs/hadoop-build-project-using-eclipse-06.png" alt="此处输入图片的描述"></p>
+<h4 id="第二：建立与-Hadoop-集群的连接，点击-Eclipse软件右下角的-Map-Reduce-Locations-面板，在面板中单击右键，选择-New-Hadoop-Location。"><a href="#第二：建立与-Hadoop-集群的连接，点击-Eclipse软件右下角的-Map-Reduce-Locations-面板，在面板中单击右键，选择-New-Hadoop-Location。" class="headerlink" title="第二：建立与 Hadoop 集群的连接，点击 Eclipse软件右下角的 Map/Reduce Locations 面板，在面板中单击右键，选择 New Hadoop Location。"></a>第二：建立与 Hadoop 集群的连接，点击 Eclipse软件右下角的 Map/Reduce Locations 面板，在面板中单击右键，选择 New Hadoop Location。</h4><p><img src="http://cdn.powerxing.com/imgs/hadoop-build-project-using-eclipse-07.png" alt="此处输入图片的描述"><br><img src="http://cdn.powerxing.com/imgs/hadoop-build-project-using-eclipse-08.png" alt="此处输入图片的描述"></p>
+<h4 id="第三：建立与-Hadoop-集群的连接，开启NameNode-和-DataNode-守护进程。"><a href="#第三：建立与-Hadoop-集群的连接，开启NameNode-和-DataNode-守护进程。" class="headerlink" title="第三：建立与 Hadoop 集群的连接，开启NameNode 和 DataNode 守护进程。"></a>第三：建立与 Hadoop 集群的连接，开启NameNode 和 DataNode 守护进程。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /home/Hadoop   //先进入本机的Hadoop文件夹</div><div class="line">./sbin/start-dfs.sh   //开启服务</div></pre></td></tr></table></figure>
+<h4 id="第四：新建一个MapReduce的Project"><a href="#第四：新建一个MapReduce的Project" class="headerlink" title="第四：新建一个MapReduce的Project"></a>第四：新建一个MapReduce的Project</h4><p>（1） New -&gt; Project…:<br>（2）选择 Map/Reduce Project，点击 Next<br>（3）接着右键点击刚创建的项目，选择 New -&gt; Class</p>
+<h4 id="第五：将配置文件复制到项目下"><a href="#第五：将配置文件复制到项目下" class="headerlink" title="第五：将配置文件复制到项目下"></a>第五：将配置文件复制到项目下</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cp /usr/local/hadoop/etc/hadoop/core-site.xml ~/workspace/UserVInfo/src</div><div class="line">cp /usr/local/hadoop/etc/hadoop/hdfs-site.xml ~/workspace/UserVInfo/src</div><div class="line">cp /usr/local/hadoop/etc/hadoop/log4j.properties ~/workspace/UserVInfo/src</div></pre></td></tr></table></figure>
+<h4 id="第六：开始写代码了！！（这里使用Java语言编程）"><a href="#第六：开始写代码了！！（这里使用Java语言编程）" class="headerlink" title="第六：开始写代码了！！（这里使用Java语言编程）"></a>第六：开始写代码了！！（这里使用Java语言编程）</h4><p>PS：接下来我提供一些在我自己的Project中所用到的一些方法<br>(1)上传本地文件至hdfs<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">uploadInputFile</span><span class="params">(String localFile)</span> <span class="keyword">throws</span> IOException</span>&#123;</div><div class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</div><div class="line">        String hdfsPath = <span class="string">"hdfs://localhost:9000/"</span>;</div><div class="line">        String hdfsInput = <span class="string">"hdfs://localhost:9000/user/hadoop/input"</span>;</div><div class="line">        FileSystem fs = FileSystem.get(URI.create(hdfsPath), conf);</div><div class="line">        fs.copyFromLocalFile(<span class="keyword">new</span> Path(localFile), <span class="keyword">new</span> Path(hdfsInput));</div><div class="line">        fs.close();</div><div class="line">        System.out.println(<span class="string">"已经上传文件到input文件夹啦"</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>（2）因为项目需要循环操作，因此我找到一个方法，删除Input文件<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">deleteInput</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>&#123;</div><div class="line">			Configuration conf = <span class="keyword">new</span> Configuration();</div><div class="line">			String hdfsInput = <span class="string">"hdfs://localhost:9000/user/hadoop/input"</span>;</div><div class="line">			String hdfsPath = <span class="string">"hdfs://localhost:9000/"</span>;</div><div class="line">			Path path = <span class="keyword">new</span> Path(hdfsInput);</div><div class="line">			FileSystem fs = FileSystem.get(URI.create(hdfsPath),conf);</div><div class="line">			fs.deleteOnExit(path);</div><div class="line">			fs.close();</div><div class="line">			System.out.println(<span class="string">"input文件已删除"</span>);</div><div class="line">		&#125;</div></pre></td></tr></table></figure></p>
+<p>(3)但是循环需要新建Input文件，因此在上传文件的之前先新建一个input文件夹，在HDFS新建文件夹和其他的系统不一样<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//在hdfs下新建文件夹</span></div><div class="line">Configuration conf = <span class="keyword">new</span> Configuration();</div><div class="line">FileSystem file = FileSystem.get(conf);</div><div class="line">file.mkdirs(<span class="keyword">new</span> Path(<span class="string">"/user/hadoop/input"</span>));</div></pre></td></tr></table></figure></p>
+<p>PS:在Windows系统下新建文件夹的Java代码实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建文件夹（不适用于hdfs即hadoop的文件系统）</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">mkDirectory</span><span class="params">(String path)</span> </span>&#123;  </div><div class="line">        File file = <span class="keyword">null</span>;  </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">            file = <span class="keyword">new</span> File(path);  </div><div class="line">            <span class="keyword">if</span> (!file .exists()  &amp;&amp; !file .isDirectory()) &#123;  </div><div class="line">               <span class="keyword">return</span> file.mkdirs();  </div><div class="line">            &#125;  </div><div class="line">            <span class="keyword">else</span>&#123;  </div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;  </div><div class="line">            &#125;  </div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;  </div><div class="line">        &#125; <span class="keyword">finally</span> &#123;  </div><div class="line">            file = <span class="keyword">null</span>;  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>(4)创建Mapper类和Reducer类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">UserVMapper</span> <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">Object</span>, <span class="title">Text</span>, <span class="title">Text</span>, <span class="title">Text</span>&gt;</span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> Text userV = <span class="keyword">new</span> Text();</div><div class="line">        <span class="keyword">private</span> Text intro = <span class="keyword">new</span> Text();</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">map</span><span class="params">(Object key, Text value, Context context)</span> <span class="keyword">throws</span> IOException, InterruptedException</span>&#123;</div><div class="line">            String html = value.toString();</div><div class="line">            String block_regex = <span class="string">"&lt;li class=\"follow_item.*?&lt;/li&gt;"</span>;</div><div class="line">            Pattern pattern = Pattern.compile(block_regex);</div><div class="line">            Matcher matcher = pattern.matcher(html);</div><div class="line">            <span class="keyword">while</span>(matcher.find())&#123;</div><div class="line">            	String block = matcher.group();</div><div class="line">            	String[] userAndInfo = getUserAndInfo(block);</div><div class="line">            	<span class="keyword">if</span>(userAndInfo != <span class="keyword">null</span>)&#123;</div><div class="line">            		String user = userAndInfo[<span class="number">0</span>];</div><div class="line">            		String info = userAndInfo[<span class="number">1</span>];</div><div class="line">            		 userV.set(user);</div><div class="line">                     intro.set(info);</div><div class="line">                     context.write(userV, intro);</div><div class="line">            	&#125;     	</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">UserVReducer</span> <span class="keyword">extends</span> <span class="title">Reducer</span>&lt;<span class="title">Text</span>, <span class="title">Text</span>, <span class="title">Text</span>, <span class="title">Text</span>&gt;</span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> Text value = <span class="keyword">new</span> Text();</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterable&lt;Text&gt; values, Context context)</span> <span class="keyword">throws</span> IOException, InterruptedException</span>&#123;</div><div class="line">        	String result = <span class="string">""</span>;</div><div class="line">        	<span class="keyword">for</span>(Text text: values)&#123;</div><div class="line">            	String one = <span class="keyword">new</span> String(text.toString());<span class="comment">//之前用getByte不行</span></div><div class="line">            	result += one;</div><div class="line">            &#125;</div><div class="line">        	value.set(result);</div><div class="line">        	context.write(key, value);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>(5)执行MapReduce程序<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">runMapReduce</span><span class="params">(String [] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">		Configuration conf = <span class="keyword">new</span> Configuration();</div><div class="line">		String [] otherArgs = <span class="keyword">new</span> GenericOptionsParser(conf, args).getRemainingArgs();</div><div class="line">		<span class="keyword">if</span>(otherArgs.length != <span class="number">2</span>)&#123;</div><div class="line">			System.err.println(<span class="string">"Usage: wordcount&lt;in&gt; &lt;out&gt;"</span>);</div><div class="line">			System.exit(<span class="number">2</span>);</div><div class="line">		&#125;</div><div class="line">		Job job = <span class="keyword">new</span> Job(conf, <span class="string">"UserV"</span>);</div><div class="line">		job.setJarByClass(UserVinfo.class);</div><div class="line">		job.setMapperClass(UserVMapper.class);</div><div class="line">		job.setCombinerClass(UserVReducer.class);</div><div class="line">		job.setReducerClass(UserVReducer.class);</div><div class="line">		job.setOutputKeyClass(Text.class);</div><div class="line">		job.setOutputValueClass(Text.class);</div><div class="line">		FileInputFormat.addInputPath(job, <span class="keyword">new</span> Path(otherArgs[<span class="number">0</span>]));</div><div class="line">		FileOutputFormat.setOutputPath(job, <span class="keyword">new</span> Path(otherArgs[<span class="number">1</span>]));</div><div class="line">		<span class="keyword">if</span>(job.waitForCompletion(<span class="keyword">true</span>)==<span class="keyword">true</span>)&#123;</div><div class="line">			System.out.println(<span class="string">"mapReduce 执行完毕！"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>大致步骤如上，具体的代码可以参考我的github:<br><a href="https://github.com/Totoro1997/Hadoop/blob/master/UserVinfo.java" target="_blank" rel="external">https://github.com/Totoro1997/Hadoop/blob/master/UserVinfo.java</a></p>
+<p>参考资料：使用Eclipse编译运行MapReduce程序 Hadoop2.6.0_Ubuntu/CentOS</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/05/Mongodb的安装及简单使用/" rel="next" title="Mongodb的安装及简单使用">
+                <i class="fa fa-chevron-left"></i> Mongodb的安装及简单使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/04/解决微博动态加载的代码实现/" rel="prev" title="解决微博动态加载的代码实现">
+                解决微博动态加载的代码实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="DilicelSten" />
+          <p class="site-author-name" itemprop="name">DilicelSten</p>
+           
+              <p class="site-description motion-element" itemprop="description">Keep moving</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop应用步骤"><span class="nav-number">1.</span> <span class="nav-text">Hadoop应用步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一：切换-Map-Reduce-开发视图，选择-Window-菜单下选择-Open-Perspective-gt-Other，弹出一个窗体，从中选择-Map-Reduce-选项即可进行切换。"><span class="nav-number">1.0.1.</span> <span class="nav-text">第一：切换 Map/Reduce 开发视图，选择 Window 菜单下选择 Open Perspective -> Other，弹出一个窗体，从中选择 Map/Reduce 选项即可进行切换。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二：建立与-Hadoop-集群的连接，点击-Eclipse软件右下角的-Map-Reduce-Locations-面板，在面板中单击右键，选择-New-Hadoop-Location。"><span class="nav-number">1.0.2.</span> <span class="nav-text">第二：建立与 Hadoop 集群的连接，点击 Eclipse软件右下角的 Map/Reduce Locations 面板，在面板中单击右键，选择 New Hadoop Location。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三：建立与-Hadoop-集群的连接，开启NameNode-和-DataNode-守护进程。"><span class="nav-number">1.0.3.</span> <span class="nav-text">第三：建立与 Hadoop 集群的连接，开启NameNode 和 DataNode 守护进程。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第四：新建一个MapReduce的Project"><span class="nav-number">1.0.4.</span> <span class="nav-text">第四：新建一个MapReduce的Project</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第五：将配置文件复制到项目下"><span class="nav-number">1.0.5.</span> <span class="nav-text">第五：将配置文件复制到项目下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第六：开始写代码了！！（这里使用Java语言编程）"><span class="nav-number">1.0.6.</span> <span class="nav-text">第六：开始写代码了！！（这里使用Java语言编程）</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DilicelSten</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

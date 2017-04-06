@@ -1,0 +1,735 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="假期在攻克爬虫期间，调转工作方式时有幸接触了redis，真心觉得它是一个好玩的东西，接下来就是我假期的一点点小收获吧~ 什么是redisRedis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。还提供list，set，zset，hash等数据结构的存储。支持数据的备份，即master-sl">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis:实现简单的分布式爬虫">
+<meta property="og:url" content="http://yoursite.com/2017/02/03/Redis-实现简单的分布式爬虫/index.html">
+<meta property="og:site_name" content="DilicelSten's blog">
+<meta property="og:description" content="假期在攻克爬虫期间，调转工作方式时有幸接触了redis，真心觉得它是一个好玩的东西，接下来就是我假期的一点点小收获吧~ 什么是redisRedis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。还提供list，set，zset，hash等数据结构的存储。支持数据的备份，即master-sl">
+<meta property="og:image" content="http://oh4g14vir.bkt.clouddn.com/redis.png">
+<meta property="og:updated_time" content="2017-04-06T15:44:46.440Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis:实现简单的分布式爬虫">
+<meta name="twitter:description" content="假期在攻克爬虫期间，调转工作方式时有幸接触了redis，真心觉得它是一个好玩的东西，接下来就是我假期的一点点小收获吧~ 什么是redisRedis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。还提供list，set，zset，hash等数据结构的存储。支持数据的备份，即master-sl">
+<meta name="twitter:image" content="http://oh4g14vir.bkt.clouddn.com/redis.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/03/Redis-实现简单的分布式爬虫/"/>
+
+
+
+
+
+  <title> Redis:实现简单的分布式爬虫 | DilicelSten's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DilicelSten's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/03/Redis-实现简单的分布式爬虫/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DilicelSten">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DilicelSten's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Redis:实现简单的分布式爬虫
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-03T22:01:43+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>假期在攻克爬虫期间，调转工作方式时有幸接触了redis，真心觉得它是一个好玩的东西，接下来就是我假期的一点点小收获吧~</p>
+<h1 id="什么是redis"><a href="#什么是redis" class="headerlink" title="什么是redis"></a>什么是redis</h1><p>Redis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。还提供list，set，zset，hash等数据结构的存储。支持数据的备份，即master-slave模式的数据备份。</p>
+<h1 id="redis实现分布式爬虫"><a href="#redis实现分布式爬虫" class="headerlink" title="redis实现分布式爬虫"></a>redis实现分布式爬虫</h1><p>按照我个人的理解，可以看下图：<br><img src="http://oh4g14vir.bkt.clouddn.com/redis.png" alt="此处输入图片的描述"><br>作为本地机的Master向平台投入相应的东西，由平台自动分配给其他的各个分机即slave，相互之间不会冲突，相当于一个老板丢工作给他的奴隶，不用他亲自上阵。<br>但是前提是需要在redis的数据平台中创建相应的队列即Queue存储Master投入的东西，给队列命名，方便后面的slave拿对东西。</p>
+<h1 id="redis的使用（基于Ubuntu系统）"><a href="#redis的使用（基于Ubuntu系统）" class="headerlink" title="redis的使用（基于Ubuntu系统）"></a>redis的使用（基于Ubuntu系统）</h1><h4 id="1-下载redis"><a href="#1-下载redis" class="headerlink" title="1.下载redis"></a>1.下载redis</h4><p>进入官网：<a href="https://redis.io/download" target="_blank" rel="external">https://redis.io/download</a></p>
+<h4 id="2-安装服务器"><a href="#2-安装服务器" class="headerlink" title="2.安装服务器"></a>2.安装服务器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install redis-server</div></pre></td></tr></table></figure>
+<h4 id="3-检查是否正常启动"><a href="#3-检查是否正常启动" class="headerlink" title="3.检查是否正常启动"></a>3.检查是否正常启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">redis-cli</div><div class="line"># 该命令会打开如下Redis提示:</div><div class="line">127.0.0.1:6379&gt; </div><div class="line"># 输入ping</div><div class="line">127.0.0.1:6379&gt; ping</div><div class="line">PONG</div><div class="line"># 说明成功安装</div></pre></td></tr></table></figure>
+<h4 id="4-如果本机作为Master，需要进行一点修改"><a href="#4-如果本机作为Master，需要进行一点修改" class="headerlink" title="4.如果本机作为Master，需要进行一点修改"></a>4.如果本机作为Master，需要进行一点修改</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 安装redis后在本机会有一个redis文件</div><div class="line">cd etc/redis</div><div class="line">#  修改redis的配置（由于需要改变它的权限还可能不能被修改，因此直接开终端的编辑器）</div><div class="line">vi redis.conf</div><div class="line"># 将文件中的</div><div class="line"># bind 127.0.0.1的注释去掉即可</div></pre></td></tr></table></figure>
+<h4 id="5-在分机需要进行步骤1、2，本机的服务器不能关闭"><a href="#5-在分机需要进行步骤1、2，本机的服务器不能关闭" class="headerlink" title="5.在分机需要进行步骤1、2，本机的服务器不能关闭"></a>5.在分机需要进行步骤1、2，本机的服务器不能关闭</h4><h4 id="6-细化操作"><a href="#6-细化操作" class="headerlink" title="6.细化操作"></a>6.细化操作</h4><p>（1）本机<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">host = <span class="string">'127.0.0.1'</span></div><div class="line">_db = redis.Reds(host=<span class="string">'localhost'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>)</div></pre></td></tr></table></figure></p>
+<p>（2）分机<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">host = <span class="string">'本机的ＩＰ'</span></div><div class="line">_db = redis.Redis(host=<span class="string">'192.168.235.80'</span>)</div></pre></td></tr></table></figure></p>
+<p>（３）查看本机的IP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ifconfig</div></pre></td></tr></table></figure></p>
+<p>（4）出错了则杀死进程重新开启redis<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 查看进程</div><div class="line">ps</div><div class="line"># 杀死进行</div><div class="line">kill 进程号</div></pre></td></tr></table></figure></p>
+<h4 id="7-具体代码实现"><a href="#7-具体代码实现" class="headerlink" title="7.具体代码实现"></a>7.具体代码实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># coding=utf-8</span></div><div class="line"><span class="keyword">import</span> urllib2</div><div class="line"><span class="keyword">import</span> re</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> redis</div><div class="line"></div><div class="line">headers = &#123;<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/49.0.2623.108 Chrome/49.0.2623.108 Safari/537.36'</span>&#125;</div><div class="line">job_redis = redis.Redis(host=<span class="string">'192.168.235.80'</span>) <span class="comment"># host为主机的IP，port和db为默认值</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Clawer</span><span class="params">(object)</span>:</span></div><div class="line"></div><div class="line">    identity = <span class="string">'master'</span>  <span class="comment"># 或slaver</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">if</span> self.identity == <span class="string">'master'</span>:</div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">20</span>):  <span class="comment"># 将需爬取的糗事百科前20页的url并存入urls集合</span></div><div class="line">                url = <span class="string">'http://www.qiushibaike.com/hot/page/%d/'</span> % (i + <span class="number">1</span>)</div><div class="line">                job_redis.sadd(<span class="string">'urls'</span>, url)</div><div class="line">        self.main()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_content</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        从糗事百科中获取故事</div><div class="line">        :return: 故事列表</div><div class="line">        """</div><div class="line">        stories = []</div><div class="line">        content_pattern = re.compile(<span class="string">'&lt;div class="content"&gt;([\w\W]*?)&lt;/div&gt;([\w\W]*?)class="stats"'</span>) <span class="comment"># 匹配故事内容（第一空）和是否含有图片（第二空）的模板</span></div><div class="line">        pattern = re.compile(<span class="string">'&lt;.*?&gt;'</span>) <span class="comment"># 匹配包括括号及括号内无关内容的模板</span></div><div class="line">        url = job_redis.spop(<span class="string">'urls'</span>)</div><div class="line">        <span class="keyword">while</span> url: <span class="comment"># 当数据库还存在网页url，取出一个并爬取</span></div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                request = urllib2.Request(url, headers=headers)</div><div class="line">                response = urllib2.urlopen(request)</div><div class="line">                text = response.read()</div><div class="line">            <span class="keyword">except</span> urllib2.URLError, e: <span class="comment"># 若出现网页读取错误捕获并输出</span></div><div class="line">                <span class="keyword">if</span> hasattr(e, <span class="string">"reason"</span>):</div><div class="line">                    <span class="keyword">print</span> e.reason</div><div class="line">            content = re.findall(content_pattern, text) <span class="comment"># 获取含模板内容的列表</span></div><div class="line">            <span class="keyword">for</span> x <span class="keyword">in</span> content:</div><div class="line">                <span class="keyword">if</span> <span class="string">"img"</span> <span class="keyword">not</span> <span class="keyword">in</span> x[<span class="number">1</span>]: <span class="comment"># 过滤含图片的故事</span></div><div class="line">                    x = re.sub(pattern, <span class="string">''</span>, x[<span class="number">0</span>])</div><div class="line">                    x = re.sub(<span class="string">'\n'</span>, <span class="string">''</span>, x)</div><div class="line">                    stories.append(x)</div><div class="line">            url = job_redis.spop(<span class="string">'urls'</span>)</div><div class="line">            time.sleep(<span class="number">3</span>)</div><div class="line"></div><div class="line">        <span class="keyword">return</span> stories</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(self)</span>:</span></div><div class="line">        self.get_content()</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    Clawer()</div></pre></td></tr></table></figure>
+<p>参考资料：<br>1.Python 用Redis简单实现分布式爬虫</p>
+<p>对于redis的更深一步了解可以查看redis的官方教程~</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/04/解决微博动态加载的代码实现/" rel="next" title="解决微博动态加载的代码实现">
+                <i class="fa fa-chevron-left"></i> 解决微博动态加载的代码实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/03/Github简明教程/" rel="prev" title="Github简明教程">
+                Github简明教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="DilicelSten" />
+          <p class="site-author-name" itemprop="name">DilicelSten</p>
+           
+              <p class="site-description motion-element" itemprop="description">Keep moving</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是redis"><span class="nav-number">1.</span> <span class="nav-text">什么是redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#redis实现分布式爬虫"><span class="nav-number">2.</span> <span class="nav-text">redis实现分布式爬虫</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#redis的使用（基于Ubuntu系统）"><span class="nav-number">3.</span> <span class="nav-text">redis的使用（基于Ubuntu系统）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-下载redis"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">1.下载redis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-安装服务器"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">2.安装服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-检查是否正常启动"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">3.检查是否正常启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-如果本机作为Master，需要进行一点修改"><span class="nav-number">3.0.0.4.</span> <span class="nav-text">4.如果本机作为Master，需要进行一点修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-在分机需要进行步骤1、2，本机的服务器不能关闭"><span class="nav-number">3.0.0.5.</span> <span class="nav-text">5.在分机需要进行步骤1、2，本机的服务器不能关闭</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-细化操作"><span class="nav-number">3.0.0.6.</span> <span class="nav-text">6.细化操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-具体代码实现"><span class="nav-number">3.0.0.7.</span> <span class="nav-text">7.具体代码实现</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DilicelSten</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

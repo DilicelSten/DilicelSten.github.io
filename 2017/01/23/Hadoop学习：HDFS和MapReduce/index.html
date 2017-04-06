@@ -1,0 +1,734 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="hadoop," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="记得曾经问过一个师兄一个问题：要学好一种编程语言怎么做才好，怎样才能像你一样灵活运用？他跟我说：从头学到尾是很不切实际的，要边做项目边学是最快的~今天才真正体会这句话，趁着做项目，也接触了Hadoop，也对它有了初步的了解~ 关于HadoopHadoop是一个由Apache基金会所开发的分布式系统基础架构。用户可以在不了解分布式底层细节的情况下，开发分布式程序，充分利用集群的威力进行高速运算和存储">
+<meta name="keywords" content="hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop学习：HDFS和MapReduce">
+<meta property="og:url" content="http://yoursite.com/2017/01/23/Hadoop学习：HDFS和MapReduce/index.html">
+<meta property="og:site_name" content="DilicelSten's blog">
+<meta property="og:description" content="记得曾经问过一个师兄一个问题：要学好一种编程语言怎么做才好，怎样才能像你一样灵活运用？他跟我说：从头学到尾是很不切实际的，要边做项目边学是最快的~今天才真正体会这句话，趁着做项目，也接触了Hadoop，也对它有了初步的了解~ 关于HadoopHadoop是一个由Apache基金会所开发的分布式系统基础架构。用户可以在不了解分布式底层细节的情况下，开发分布式程序，充分利用集群的威力进行高速运算和存储">
+<meta property="og:image" content="http://oh4g14vir.bkt.clouddn.com/MapReduce.png">
+<meta property="og:image" content="http://cdn.powerxing.com/imgs/hadoop-build-project-using-eclipse-10.png">
+<meta property="og:updated_time" content="2017-04-06T15:41:26.697Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop学习：HDFS和MapReduce">
+<meta name="twitter:description" content="记得曾经问过一个师兄一个问题：要学好一种编程语言怎么做才好，怎样才能像你一样灵活运用？他跟我说：从头学到尾是很不切实际的，要边做项目边学是最快的~今天才真正体会这句话，趁着做项目，也接触了Hadoop，也对它有了初步的了解~ 关于HadoopHadoop是一个由Apache基金会所开发的分布式系统基础架构。用户可以在不了解分布式底层细节的情况下，开发分布式程序，充分利用集群的威力进行高速运算和存储">
+<meta name="twitter:image" content="http://oh4g14vir.bkt.clouddn.com/MapReduce.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/23/Hadoop学习：HDFS和MapReduce/"/>
+
+
+
+
+
+  <title> Hadoop学习：HDFS和MapReduce | DilicelSten's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DilicelSten's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/23/Hadoop学习：HDFS和MapReduce/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DilicelSten">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DilicelSten's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hadoop学习：HDFS和MapReduce
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-23T20:25:19+08:00">
+                2017-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记得曾经问过一个师兄一个问题：要学好一种编程语言怎么做才好，怎样才能像你一样灵活运用？他跟我说：从头学到尾是很不切实际的，要边做项目边学是最快的~今天才真正体会这句话，趁着做项目，也接触了Hadoop，也对它有了初步的了解~</p>
+<h1 id="关于Hadoop"><a href="#关于Hadoop" class="headerlink" title="关于Hadoop"></a>关于Hadoop</h1><p><strong>Hadoop</strong>是一个由Apache基金会所开发的分布式系统基础架构。用户可以在不了解分布式底层细节的情况下，开发分布式程序，充分利用集群的威力进行高速运算和存储。<br>Hadoop的框架最核心的设计就是：<strong>HDFS和MapReduce</strong>。<strong>HDFS</strong>为海量的数据提供了<strong>存储</strong>，相当于一个<strong>文件中转站</strong>的功能，而<strong>MapReduce</strong>为海量的数据提供了<strong>计算</strong>。但两者只是理论基础，不是具体可使用的高级应用，Hadoop旗下有很多经典子项目，比如<strong>HBase</strong>、<strong>Hive</strong>等，这些都是基于HDFS和MapReduce发展出来的。要想了解<strong>Hadoop</strong>，就必须知道<strong>HDFS</strong>和<strong>MapReduce</strong>是什么。</p>
+<p>##（1）HDFS<br><strong>HDFS</strong>，英文为<strong>Hadoop Distributed File System</strong>，即分布式文件系统，功能相当于一个网盘或者中转站。<br>HDFS有<strong>高容错性</strong>的特点，并且设计用来部署在低廉的硬件上，就算在由高失败率的节点或网络组成的大集群内运行的作业，Hadoop都可以让作业成功完成。而且它提供<strong>高吞吐量</strong>（high throughput）来访问应用程序的数据，适合那些有着超大数据集（large data set）的应用程序。HDFS放宽了POSIX的要求，可以以<strong>流的形式</strong>访问（streaming access）文件系统中的数据。<br>PS：<br>（1）<strong>容错</strong>：<br>即是<strong>Fault Tolerance</strong>，确切地说是容故障（Fault），而并非容错误（Error）。Hadoop实现容错的主要方法就是重新执行任务，具体的可以查看此博客：<a href="http://blog.csdn.net/magicdreaming/article/details/7616531，在此不过多赘述。" target="_blank" rel="external">http://blog.csdn.net/magicdreaming/article/details/7616531，在此不过多赘述。</a><br>（2）<strong>吞吐量</strong>：<br>指在单位时间内中央处理器（CPU）从存储设备读取-&gt;处理-&gt;存储信息的量。<br>（3）<strong>流式数据访问</strong><br>HDFS应用需要流式访问它们的数据集。其更多考虑到了数据批处理，而不是用户交互处理。相比数据访问的低延迟，HDFS应用要求能够高速率、大批量地处理数据，极少有程序对单一的读写操作有严格的响应时间要求。POSIX标准设置的很多硬性约束对HDFS应用系统不是必需的。为了提高数据的吞吐量，在一些关键方面对POSIX的语义做了一些修改。<br>（4）<strong>POSIX</strong><br>POSIX表示可移植操作系统接口（Portable Operating System Interface ，缩写为 POSIX），POSIX标准定义了操作系统应该为应用程序提供的接口标准，是IEEE为要在各种UNIX操作系统上运行的软件而定义的一系列API标准的总称.</p>
+<p>##（2）MapReduce<br><img src="http://oh4g14vir.bkt.clouddn.com/MapReduce.png" alt="此处输入图片的描述"><br>按个人理解，如图所示，MapReduce可以拆分成两个单词也是其两个主要操作，Map的话即地图，在这里为映射的意思，表示从众多的数据中匹配出所要的东西，而Reduce即减少，表示将匹配到的一个个数据进行统计整合成一个总的数据。<br>例如：<br>对大量数据中的性别进行匹配会得到：<br>女 1<br>女 1<br>女 1<br>…..<br>最终进行统计的结果就是一行：<br>女  1000<br>简单的说，Map是把一组数据一对一的映射为另外的一组数据，其映射的规则由一个函数来指定，比如对[1,2,3,4]进行乘2的映射就变成了[2,4,6,8]。Reduce是对一组数据进行归约，这个归约的规则由一个函数指定，比如对[1,2,3,4]进行求和的归约得到结果是10，而对它进行求积的归约结果是24。</p>
+<h1 id="Hadoop的安装使用"><a href="#Hadoop的安装使用" class="headerlink" title="Hadoop的安装使用"></a>Hadoop的安装使用</h1><p>##（1）安装<br>那Hadoop既然这么好，该如何去用呢？<br>在此提供<strong>Ubuntu</strong>下Hadoop的安装博客：<br><a href="http://www.powerxing.com/install-hadoop/" target="_blank" rel="external">http://www.powerxing.com/install-hadoop/</a><br>其中详细说明了Hadoop的整个安装流程以及Hadoop的三种模式的配置方式：<br>（1）单机<br>（2）伪分布<br>（3）集群</p>
+<p>##（2）使用<br>安装好了当然是要编写程序来实现了，在此使用Java进行实现，有相应的博客详细说明：<a href="http://www.powerxing.com/hadoop-build-project-using-eclipse/" target="_blank" rel="external">http://www.powerxing.com/hadoop-build-project-using-eclipse/</a><br>其中使用Eclipse编译运行MapReduce程序，包括从安装eclipse到编写程序的整个流程。</p>
+<p>##（3）小tips<br>在我个人的安装使用的过程中也出现一些小毛病，在这里就跟大家分享一下遇到这些Problems时该如何去做呢？<br>（1）在赋予新用户权限的时候可能切换账户之后它依旧会说它没有权限，重新试了很多次还是没用，此时建议删除用户再重复操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo adduser hadoop sudo</div></pre></td></tr></table></figure></p>
+<p>（2）因为之前已经安装了Eclipse，配置的是1.8的JDK，但按流程的话，在这一步，$JAVA_HOME/bin/java -version的输出结果和java -version的输出结果<strong>不一样</strong>，这时不用怕，程序会进行最高默认。但在后面编写程序时报错，按照错误更改JDK的版本即可。<br>（3）在建立与 Hadoop 集群的连接，建立 New Hadoop Location的时候会发现文件夹没东西（不像图所示），其实是关闭了 NameNode 和 DataNode 守护进程。这时输入一下命令即可~<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./sbin/start-dfs.sh</div></pre></td></tr></table></figure></p>
+<p><img src="http://cdn.powerxing.com/imgs/hadoop-build-project-using-eclipse-10.png" alt="此处输入图片的描述"></p>
+<h2 id="具体实现代码："><a href="#具体实现代码：" class="headerlink" title="具体实现代码："></a>具体实现代码：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> org.apache.hadoop.examples;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.util.StringTokenizer;</div><div class="line"><span class="keyword">import</span> java.util.regex.Matcher;</div><div class="line"><span class="keyword">import</span> java.util.regex.Pattern;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.fs.Path;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.io.Text;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Job;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Mapper;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Reducer;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.lib.input.FileInputFormat;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.util.GenericOptionsParser;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WordCount</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TokenizerMapper</span> <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">Object</span>, <span class="title">Text</span>, <span class="title">Text</span>, <span class="title">IntWritable</span>&gt;</span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> IntWritable one = <span class="keyword">new</span> IntWritable(<span class="number">1</span>);</div><div class="line">        <span class="keyword">private</span> Text word = <span class="keyword">new</span> Text();</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">map</span><span class="params">(Object key, Text value, Context context)</span> <span class="keyword">throws</span> IOException, InterruptedException</span>&#123;</div><div class="line">            String line = value.toString();</div><div class="line">            line = line.replace(<span class="string">"\\"</span>, <span class="string">""</span>);</div><div class="line">            String regex = <span class="string">"性别：&lt;/span&gt;&lt;span class=\"pt_detail\"&gt;(.*?)&lt;/span&gt;"</span>;</div><div class="line">            Pattern pattern = Pattern.compile(regex);</div><div class="line">            Matcher matcher = pattern.matcher(line);</div><div class="line">            <span class="keyword">while</span>(matcher.find())&#123;</div><div class="line">                String term = matcher.group(<span class="number">1</span>);</div><div class="line">                word.set(term);</div><div class="line">                context.write(word, one);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntSumReducer</span> <span class="keyword">extends</span> <span class="title">Reducer</span>&lt;<span class="title">Text</span>, <span class="title">IntWritable</span>, <span class="title">Text</span>, <span class="title">IntWritable</span>&gt;</span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> IntWritable result = <span class="keyword">new</span> IntWritable();</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterable&lt;IntWritable&gt; values, Context context)</span> <span class="keyword">throws</span> IOException, InterruptedException</span>&#123;</div><div class="line">            <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">            <span class="keyword">for</span>(IntWritable val :values)&#123;</div><div class="line">                sum+= val.get();</div><div class="line">            &#125;</div><div class="line">            result.set(sum);</div><div class="line">            context.write(key, result);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Configuration conf = <span class="keyword">new</span> Configuration();</div><div class="line">        String[] otherArgs = <span class="keyword">new</span> GenericOptionsParser(conf, args).getRemainingArgs();</div><div class="line">        <span class="keyword">if</span>(otherArgs.length != <span class="number">2</span>)&#123;</div><div class="line">            System.err.println(<span class="string">"Usage: wordcount &lt;in&gt; &lt;out&gt;"</span>);</div><div class="line">            System.exit(<span class="number">2</span>);</div><div class="line">        &#125;</div><div class="line">        Job job = <span class="keyword">new</span> Job(conf, <span class="string">"word count"</span>);</div><div class="line">        job.setJarByClass(WordCount.class);</div><div class="line">        job.setMapperClass(TokenizerMapper.class);</div><div class="line">        job.setCombinerClass(IntSumReducer.class);</div><div class="line">        job.setReducerClass(IntSumReducer.class);</div><div class="line">        job.setOutputKeyClass(Text.class);</div><div class="line">        job.setOutputValueClass(IntWritable.class);</div><div class="line">        FileInputFormat.addInputPath(job, <span class="keyword">new</span> Path(otherArgs[<span class="number">0</span>]));</div><div class="line">        FileOutputFormat.setOutputPath(job, <span class="keyword">new</span> Path(otherArgs[<span class="number">1</span>]));</div><div class="line">        System.exit(job.waitForCompletion(<span class="keyword">true</span>)?<span class="number">0</span>:<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>###Hadoop的分享就先停一步，等待继续攻克~</p>
+<p>参考资料：<br>（1）Hadoop的容错性<br>（2）Hadoop简介：HDFS和MapReduce的实现</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hadoop/" rel="tag"># hadoop</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/03/Github简明教程/" rel="next" title="Github简明教程">
+                <i class="fa fa-chevron-left"></i> Github简明教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/18/linux命令/" rel="prev" title="关于Linux的常用命令">
+                关于Linux的常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="DilicelSten" />
+          <p class="site-author-name" itemprop="name">DilicelSten</p>
+           
+              <p class="site-description motion-element" itemprop="description">Keep moving</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于Hadoop"><span class="nav-number">1.</span> <span class="nav-text">关于Hadoop</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop的安装使用"><span class="nav-number">2.</span> <span class="nav-text">Hadoop的安装使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现代码："><span class="nav-number">2.1.</span> <span class="nav-text">具体实现代码：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DilicelSten</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

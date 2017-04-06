@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="python,selenium," />
 
 
 
@@ -87,17 +87,19 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta name="keywords">
+<meta name="description" content="前言近来都在与新浪这个大佬在pk。首先是网页爬取新浪微博，遇到的难题是cookie的存活期太慢，一般爬十分钟就over了一个；后来发明了手机版的模拟登录，顺风顺水了一段时间，结果新浪又来一个验证码，被气得半死。无奈手动输入验证码后，再模拟登录。然而不过两个月，新浪哥又开始抓严，搞得手机版的模拟登陆经常登陆不上去。最后实在无办法了，只好真的去“模拟”浏览器实现爬虫了。说道浏览器自动化操作，目前最好用">
+<meta name="keywords" content="python,selenium">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2016/11/24/hello-world/index.html">
+<meta property="og:title" content="使用selenium爬取微博内容">
+<meta property="og:url" content="http://yoursite.com/2016/12/09/selenium爬微博/index.html">
 <meta property="og:site_name" content="DilicelSten's blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-04-06T15:23:27.460Z">
+<meta property="og:description" content="前言近来都在与新浪这个大佬在pk。首先是网页爬取新浪微博，遇到的难题是cookie的存活期太慢，一般爬十分钟就over了一个；后来发明了手机版的模拟登录，顺风顺水了一段时间，结果新浪又来一个验证码，被气得半死。无奈手动输入验证码后，再模拟登录。然而不过两个月，新浪哥又开始抓严，搞得手机版的模拟登陆经常登陆不上去。最后实在无办法了，只好真的去“模拟”浏览器实现爬虫了。说道浏览器自动化操作，目前最好用">
+<meta property="og:image" content="http://img.blog.csdn.net/20161204161149558">
+<meta property="og:updated_time" content="2017-04-06T15:38:39.617Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="使用selenium爬取微博内容">
+<meta name="twitter:description" content="前言近来都在与新浪这个大佬在pk。首先是网页爬取新浪微博，遇到的难题是cookie的存活期太慢，一般爬十分钟就over了一个；后来发明了手机版的模拟登录，顺风顺水了一段时间，结果新浪又来一个验证码，被气得半死。无奈手动输入验证码后，再模拟登录。然而不过两个月，新浪哥又开始抓严，搞得手机版的模拟登陆经常登陆不上去。最后实在无办法了，只好真的去“模拟”浏览器实现爬虫了。说道浏览器自动化操作，目前最好用">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20161204161149558">
 
 
 
@@ -125,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/24/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/09/selenium爬微博/"/>
 
 
 
 
 
-  <title> Hello World | DilicelSten's blog </title>
+  <title> 使用selenium爬取微博内容 | DilicelSten's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -290,7 +292,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/24/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/09/selenium爬微博/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="DilicelSten">
@@ -311,7 +313,7 @@
             
             
               
-                Hello World
+                使用selenium爬取微博内容
               
             
           </h1>
@@ -326,8 +328,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-24T00:00:00+08:00">
-                2016-11-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-09T15:37:02+08:00">
+                2016-12-09
               </time>
             
 
@@ -362,15 +364,22 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>近来都在与新浪这个大佬在pk。首先是网页爬取新浪微博，遇到的难题是cookie的存活期太慢，一般爬十分钟就over了一个；后来发明了手机版的模拟登录，顺风顺水了一段时间，结果新浪又来一个验证码，被气得半死。无奈手动输入验证码后，再模拟登录。然而不过两个月，新浪哥又开始抓严，搞得手机版的模拟登陆经常登陆不上去。最后实在无办法了，只好真的去“模拟”浏览器实现爬虫了。说道浏览器自动化操作，目前最好用的就是selenium啦。</p>
+<h1 id="关于selenium"><a href="#关于selenium" class="headerlink" title="关于selenium"></a>关于selenium</h1><p>Selenium原本是一个用于Web应用程序测试的工具。Selenium 测试直接运行在浏览器中，就像真正的用户在操作一样。它支持的浏览器包括IE,Chrome和Firefox等。现在很多虫师为了绕过反爬虫的机制，都选择selenium。由于selenium的原理是<strong>唤起浏览器操作</strong>，因而代价就是爬虫的<strong>非常慢</strong>。</p>
+<h2 id="selenium的安装"><a href="#selenium的安装" class="headerlink" title="selenium的安装"></a>selenium的安装</h2><p>我的机子是Ubuntu，所以下面主要是总结我在Ubuntu安装的过程。 </p>
+<ol>
+<li>输入安装命令行<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pip install -U selenium</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>2.下载驱动器geckodriver<br>（百度网盘的下载链接<a href="http://pan.baidu.com/s/1sk9Rw3z）" target="_blank" rel="external">http://pan.baidu.com/s/1sk9Rw3z）</a><br>3.更新浏览器<br>如FireFox:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get update –&gt; sudo apt-get install firefox</div></pre></td></tr></table></figure></p>
+<p>4.selenium的测试代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"></div><div class="line">browser = webdriver.Firefox(executable_path=<span class="string">'/PycharmProjects/Weibo/geckodriver'</span>)  <span class="comment">## 配置驱动文件所在的路径(路径为geckodriver的存放路径)</span></div><div class="line">browser.get(<span class="string">"http://www.weibo.com/login.php"</span>)  <span class="comment">## 浏览器Get请求访问</span></div><div class="line"><span class="keyword">print</span> browser.page_source  <span class="comment">## 输入返回的源代码</span></div></pre></td></tr></table></figure></p>
+<p>PS：在我测试的时候它告诉我配置文件路径错了，那这该如何是好？<br>这个时候我将我的geckodriver放到另外一个地方：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cp /home/totoro/codes/PycharmProjects/Weibo/geckodriver /usr/local/bin/geckodriver</div></pre></td></tr></table></figure></p>
+<p>然后进入存放目录查看情况：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/bin</div></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls -l</div></pre></td></tr></table></figure>
+<p>由于默认权限不是777，所以对其进行更改<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chmod <span class="number">777</span> geckodriver</div></pre></td></tr></table></figure></p>
+<p>最后就可以看到geckodriver呈现绿色了</p>
+<p>##selenium的测试结果<br><img src="http://img.blog.csdn.net/20161204161149558" alt="此处输入图片的描述"></p>
+<p>####模拟登录过程<br>selenium开启的浏览器，但用户可以当这个浏览器正常使用。所以模拟登录的过程，其实就是程序设置休眠时间，让用户输入账号密码并完成登陆操作后，再实行网页抓取。具体的代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line">browser = webdriver.Firefox(executable_path=<span class="string">'/home/gdufs-iiip/PycharmProjects/Weibo/geckodriver'</span>)  <span class="comment">## 配置驱动文件所在的路径</span></div><div class="line">browser.get(<span class="string">"http://www.weibo.com/login.php"</span>)  <span class="comment">## 浏览器Get请求访问</span></div><div class="line">begin_time = time.time()  <span class="comment">##记录开始账号密码的时间</span></div><div class="line"></div><div class="line"><span class="keyword">while</span>(<span class="keyword">True</span>):</div><div class="line">    <span class="keyword">if</span> ((time.time() - begin_time) &gt; <span class="number">60</span>):  <span class="comment">## 实现登录的时限为60秒</span></div><div class="line">        search_url = <span class="string">'http://weibo.cn/search/mblog?hideSearchFrame=&amp;keyword=林丹出轨&amp;sort=hot&amp;page=1'</span> <span class="comment">##实行新闻网页抓取</span></div><div class="line">        browser.get(search_url)</div><div class="line">        content = browser.page_source</div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> content</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -398,6 +407,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/selenium/" rel="tag"># selenium</a>
+          
+        </div>
+      
 
       
         
@@ -407,8 +424,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/25/xgboost/" rel="next" title="xgboost：一个纯小白的学习历程">
-                <i class="fa fa-chevron-left"></i> xgboost：一个纯小白的学习历程
+              <a href="/2016/12/18/linux命令/" rel="next" title="关于Linux的常用命令">
+                <i class="fa fa-chevron-left"></i> 关于Linux的常用命令
               </a>
             
           </div>
@@ -416,6 +433,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/25/用户画像/" rel="prev" title="一步一步认识用户画像">
+                一步一步认识用户画像 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -535,7 +556,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于selenium"><span class="nav-number">2.</span> <span class="nav-text">关于selenium</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#selenium的安装"><span class="nav-number">2.1.</span> <span class="nav-text">selenium的安装</span></a></li></ol></li></ol></div>
             
 
           </div>
