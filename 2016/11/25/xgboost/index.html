@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="�㷨��GBDT," />
+  <meta name="keywords" content="算法，GBDT," />
 
 
 
@@ -87,21 +87,21 @@
 
 
 
-<meta name="description" content="�̶����죬һ��ʼ�Ծ�����������İ�����������Ͻ���һ����ɨ����֮�����ж������صļ������ͣ��Ը������ʽ����������˽⣬Ҳ½½�����������Լ���˼·����������̸̸�⼸���Ҷ�������ʲô��~Ϊ���ܶ�xgboost��һ�����õ���ʶ���һ��ǰ�֮ǰ��������Щ�������顶���">
-<meta name="keywords" content="�㷨��GBDT">
+<meta name="description" content="短短三天，一开始对决策树都深感陌生的我在网上进行一番“扫荡”之后，研读了相关的技术博客，对各种名词进行了深度了解，也陆陆续续整理了自己的思路，接下来就谈谈这几天我都经历了什么吧~为了能对xgboost有一个更好的认识，我还是把之前看过又有些遗忘的书《数据挖掘原理与实践》拿出来翻一翻，其中第3章中对于决策树的基本概念、构建及其三种算法都有较详细的解说如想了解此书，可点击此处，接下来我将对这三部分进行">
+<meta name="keywords" content="算法，GBDT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="xgboost��һ����С�׵�ѧϰ����">
+<meta property="og:title" content="xgboost：一个纯小白的学习历程">
 <meta property="og:url" content="http://yoursite.com/2016/11/25/xgboost/index.html">
 <meta property="og:site_name" content="DilicelSten's blog">
-<meta property="og:description" content="�̶����죬һ��ʼ�Ծ�����������İ�����������Ͻ���һ����ɨ����֮�����ж������صļ������ͣ��Ը������ʽ����������˽⣬Ҳ½½�����������Լ���˼·����������̸̸�⼸���Ҷ�������ʲô��~Ϊ���ܶ�xgboost��һ�����õ���ʶ���һ��ǰ�֮ǰ��������Щ�������顶���">
+<meta property="og:description" content="短短三天，一开始对决策树都深感陌生的我在网上进行一番“扫荡”之后，研读了相关的技术博客，对各种名词进行了深度了解，也陆陆续续整理了自己的思路，接下来就谈谈这几天我都经历了什么吧~为了能对xgboost有一个更好的认识，我还是把之前看过又有些遗忘的书《数据挖掘原理与实践》拿出来翻一翻，其中第3章中对于决策树的基本概念、构建及其三种算法都有较详细的解说如想了解此书，可点击此处，接下来我将对这三部分进行">
 <meta property="og:image" content="http://7xiht5.com1.z0.glb.clouddn.com/blog_animal_classification.png">
 <meta property="og:image" content="http://images.cnitblog.com/blog/571227/201412/121628452909401.png">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530164744149-143494562.jpg">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530163025555-653522936.jpg">
-<meta property="og:updated_time" content="2017-04-06T15:17:34.740Z">
+<meta property="og:updated_time" content="2017-04-06T15:19:20.029Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="xgboost��һ����С�׵�ѧϰ����">
-<meta name="twitter:description" content="�̶����죬һ��ʼ�Ծ�����������İ�����������Ͻ���һ����ɨ����֮�����ж������صļ������ͣ��Ը������ʽ����������˽⣬Ҳ½½�����������Լ���˼·����������̸̸�⼸���Ҷ�������ʲô��~Ϊ���ܶ�xgboost��һ�����õ���ʶ���һ��ǰ�֮ǰ��������Щ�������顶���">
+<meta name="twitter:title" content="xgboost：一个纯小白的学习历程">
+<meta name="twitter:description" content="短短三天，一开始对决策树都深感陌生的我在网上进行一番“扫荡”之后，研读了相关的技术博客，对各种名词进行了深度了解，也陆陆续续整理了自己的思路，接下来就谈谈这几天我都经历了什么吧~为了能对xgboost有一个更好的认识，我还是把之前看过又有些遗忘的书《数据挖掘原理与实践》拿出来翻一翻，其中第3章中对于决策树的基本概念、构建及其三种算法都有较详细的解说如想了解此书，可点击此处，接下来我将对这三部分进行">
 <meta name="twitter:image" content="http://7xiht5.com1.z0.glb.clouddn.com/blog_animal_classification.png">
 
 
@@ -136,7 +136,7 @@
 
 
 
-  <title> xgboost��һ����С�׵�ѧϰ���� | DilicelSten's blog </title>
+  <title> xgboost：一个纯小白的学习历程 | DilicelSten's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -316,7 +316,7 @@
             
             
               
-                xgboost��һ����С�׵�ѧϰ����
+                xgboost：一个纯小白的学习历程
               
             
           </h1>
@@ -367,77 +367,77 @@
       
 
       
-        <p>�̶����죬һ��ʼ�Ծ�����������İ�����������Ͻ���һ����ɨ����֮�����ж������صļ������ͣ��Ը������ʽ����������˽⣬Ҳ½½�����������Լ���˼·����������̸̸�⼸���Ҷ�������ʲô��~<br>Ϊ���ܶ�xgboost��һ�����õ���ʶ���һ��ǰ�֮ǰ��������Щ�������顶�����ھ�ԭ����ʵ�����ó�����һ�������е�3���ж��ھ������Ļ�������������������㷨���н���ϸ�Ľ�˵<a href="https://www.amazon.cn/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E8%92%8B%E7%9B%9B%E7%9B%8A/dp/B005M1LXLC" target="_blank" rel="external">�����˽����飬�ɵ����˴�</a>���������ҽ����������ֽ��м�Ҫ�Ĳ�����</p>
-<h2 id="������"><a href="#������" class="headerlink" title="������"></a>������</h2><h5 id="1-�������L�������"><a href="#1-�������L�������" class="headerlink" title="1. �������Ļ�������"></a>1. �������Ļ�������</h5><p>��������Decision Tree����һ�����ͽṹ���������߽ڵ㣨�ڲ��ڵ㣩����֧��Ҷ�ڵ������֡���Ϊһ��Ԥ��ģ�ͣ����������Ƕ�������������ֵ֮����һ��ӳ����ϵ������ÿ���ڵ���ʾĳ�����󣬶�ÿ���ֲ�·����������ĳ�����ܵ�����ֵ����ÿ��Ҷ��������Ӧ�Ӹ��ڵ㵽��Ҷ�ڵ���������·������ʾ�Ķ�����ֵ����ͼ���ܻ�������?????<br><img src="http://7xiht5.com1.z0.glb.clouddn.com/blog_animal_classification.png" alt="ͼ��"><br>    ����������������δ֪�������з��࣬�����������£��Ӿ������ĸ��ڵ㿪ʼ��������������ĳ����֧����������ֱ��Ҷ�ڵ㣬��Ҷ�ڵ���������ֵ��Ϊ��δ֪�������������š�</p>
-<h5 id="2-�������L���"><a href="#2-�������L���" class="headerlink" title="2. �������Ĺ���"></a>2. �������Ĺ���</h5><p> ������������Ҫ���������棺<br>    ��1��ѡ���ʵ�������Ϊ�������Ľڵ�<br>    ��2�����ʵ���λ��ֹͣ���ֹ���</p>
-<h5 id="3-�����㷨"><a href="#3-�����㷨" class="headerlink" title="3. �����㷨"></a>3. �����㷨</h5><pre><code>��Ҫ��ID3�㷨��Iterative Dichotomiser 3����C4.5�㷨��CART�㷨(�����ع���)�Լ�Random Forest������ͨ������������4���㷨�����˽��ɣ�~
+        <p>短短三天，一开始对决策树都深感陌生的我在网上进行一番“扫荡”之后，研读了相关的技术博客，对各种名词进行了深度了解，也陆陆续续整理了自己的思路，接下来就谈谈这几天我都经历了什么吧~<br>为了能对xgboost有一个更好的认识，我还是把之前看过又有些遗忘的书《数据挖掘原理与实践》拿出来翻一翻，其中第3章中对于决策树的基本概念、构建及其三种算法都有较详细的解说<a href="https://www.amazon.cn/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E8%92%8B%E7%9B%9B%E7%9B%8A/dp/B005M1LXLC" target="_blank" rel="external">如想了解此书，可点击此处</a>，接下来我将对这三部分进行简要的阐述：</p>
+<h2 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h2><h5 id="1-决策树的基本概念"><a href="#1-决策树的基本概念" class="headerlink" title="1. 决策树的基本概念"></a>1. 决策树的基本概念</h5><p>决策树（Decision Tree）是一种树型结构，包括决策节点（内部节点）、分支和叶节点三部分。作为一个预测模型，它代表的是对象属性与对象值之间的一种映射关系。树中每个节点表示某个对象，而每个分叉路径则代表的某个可能的属性值，而每个叶结点则对应从根节点到该叶节点所经历的路径所表示的对象的值。看图可能会更容易?????<br><img src="http://7xiht5.com1.z0.glb.clouddn.com/blog_animal_classification.png" alt="图解"><br>    决策树可以用来对未知样本进行分类，分类过程如下：从决策树的根节点开始，从上往下沿着某个分支往下搜索，直到叶节点，以叶节点的类标号值作为该未知样本所属类标号。</p>
+<h5 id="2-决策树的构建"><a href="#2-决策树的构建" class="headerlink" title="2. 决策树的构建"></a>2. 决策树的构建</h5><p> 构建过程中主要考虑两方面：<br>    （1）选合适的属性作为决策树的节点<br>    （2）在适当的位置停止划分过程</p>
+<h5 id="3-经典算法"><a href="#3-经典算法" class="headerlink" title="3. 经典算法"></a>3. 经典算法</h5><pre><code>主要有ID3算法（Iterative Dichotomiser 3）、C4.5算法、CART算法(分类回归树)以及Random Forest，下面通过表格来对这4个算法进行了解吧！~
 </code></pre><table>
 <thead>
 <tr>
-<th>�����㷨</th>
-<th>����ѡ����׼</th>
-<th>ʹ�÷���</th>
-<th>�ص�</th>
+<th>分类算法</th>
+<th>属性选择标准</th>
+<th>使用方法</th>
+<th>特点</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>ID3</td>
-<td>��Ϣ����</td>
-<td>�Զ����µ�̰�Ĳ���</td>
-<td>ֻ�ܴ��������������ݣ����ֹ��������������Ӽ���ģ��С����ͳ�����������ֶ�ֹͣ��������ѡ����׼���ܵ��¹������ϡ�</td>
+<td>信息增益</td>
+<td>自顶向下的贪心策略</td>
+<td>只能处理分类属性数据，划分过程中容易由于子集规模过小造成统计特征不充分而停止，其属性选择标准可能导致过度拟合。</td>
 </tr>
 <tr>
 <td>C4.5</td>
-<td>��Ϣ������</td>
-<td>���ۼ�֦</td>
-<td>��Ϊ����������������ֻ���Ƿ����ͣ��ܹ����������ͺ���ɢ���������ݣ���ȱʧֵ������ֱ�ӷ��䵽���������ķ�֧���������ɵ������к���֦���������ڹ����������������ݼ����ж��ε�˳��ɨ�����������Ҳ����ľ����������ȶ���</td>
+<td>信息增益率</td>
+<td>悲观剪枝</td>
+<td>可为多叉树，输出变量只能是分类型，能够处理连续型和离散型属性数据，对缺失值的数据直接分配到概率最大的分支，会对生成的树进行后剪枝处理。但在构造过程中需对数据集进行多次的顺序扫描和排序，且产生的决策树不够稳定。</td>
 </tr>
 <tr>
 <td>CART</td>
-<td>Giniϵ��</td>
-<td>��Ԫ�ݹ黮�ַ���/���۸����Լ�֦��</td>
-<td>���ɵ���һ��������������������������Ϊ�����ͻ���ֵ�ͣ�����ÿһ���ľ���ʱֻ���ǡ��ǡ����ߡ�����,���ô������Դ���ȱʧֵ������Ԥ��֦�ͺ���֦�����ϵķ�ʽ��֦</td>
+<td>Gini系数</td>
+<td>二元递归划分方法/代价复杂性剪枝法</td>
+<td>构成的是一个二叉树，输入和输出变量可为分类型或数值型，它在每一步的决策时只能是“是”或者“否”,采用代理测试处理缺失值，采用预剪枝和后剪枝相结合的方式剪枝</td>
 </tr>
 <tr>
 <td>Random Forest</td>
-<td>����</td>
-<td>����ѡ�񷽷�</td>
-<td>���������������ķ�����,ÿ�þ�����֮����û�й�����,�������������ϵ�����������ʵ�ֲ��л����㡣</td>
+<td>随机</td>
+<td>随机选择方法</td>
+<td>包含多个决策树的分类器,每棵决策树之间是没有关联的,不会产生过拟合的现象，容易实现并行化计算。</td>
 </tr>
 </tbody>
 </table>
-<p>����֪ʶ�㣺<br>��.��Ϣ�أ������䶨��Ϊ��ɢ�����¼����ֵĸ��ʣ�һ��ϵͳԽ����������Ϣ�ؾ�Խ�ͣ���֮һ��ϵͳԽ�ǻ��ң�������Ϣ�ؾ�Խ�ߡ����Ա���Ϊ��ϵͳ���򻯳̶ȵ�һ��������<br>��.��Ϣ���棺����һ��һ���������Եģ����ǿ�һ��������ϵͳ������û����ʱ����Ϣ�����Ƕ��٣����ߵĲ�ֵ��������������ϵͳ��������Ϣ���档������ƫ��ȡֵ�϶������ԡ�<br><img src="http://images.cnitblog.com/blog/571227/201412/121628452909401.png" alt="��Ϣ�������㹫ʽ"><br>3.�����㷨�����Ǹ��򵥽��ܣ������Ŀ���<a href="http://blog.csdn.net/luo123n/article/details/50149403" target="_blank" rel="external">�����˴����������˽�</a></p>
-<p>���ھ���������Ҳ���˽�һ�����˽⣬��ô��������������xgboost��һ�������Ĵ��ڰ�~���������˽�֮ǰ������΢��ʶһ��xgboost��ǰ��GDBT~</p>
-<h2 id="GBDT��Gradient-boosting-Decision-Tree��"><a href="#GBDT��Gradient-boosting-Decision-Tree��" class="headerlink" title="GBDT��Gradient boosting Decision Tree��"></a>GBDT��Gradient boosting Decision Tree��</h2><h5 id="1-��������"><a href="#1-��������" class="headerlink" title="1.��������"></a>1.��������</h5><pre><code>GBDT���Ծ�������CART��Ϊ��ѧϰ����GB�㷨����GB��DT�Ľ��ϡ�GBDT�еľ������ǻع������Ǹ���ģ�ͣ����Ƚ�Сһ�㲻�ᳬ��5��Ҷ�ӽڵ�������Ҳ���ᳬ��10���������ɵ�ÿ�þ��������ϱȽ�С������ϵ����ѧϰ��&lt;0.1������ЩGBDT��ʵ�ּ���������������subsample 0.5&lt;=f&lt;=0.8������ģ�͵ķ���������ͨ��������֤�ķ���ѡ�����ŵĲ��������⣬����Ҫ�������������ɣ�Regression Decision Tree����DT)��Gradient Boosting����GB)��Shrinkage (�㷨��һ����Ҫ�ݽ���֦��Ŀǰ�󲿷�Դ�붼���ð汾ʵ�֣�
-</code></pre><h5 id="2-����"><a href="#2-����" class="headerlink" title="2.����"></a>2.����</h5><pre><code>ÿһ����ѧ����֮ǰ���������ۺ͵Ĳв�����в�����һ����Ԥ��ֵ���ܵ���ʵֵ���ۼ��������磺A����ʵ������18�꣬����һ������Ԥ��������12�꣬����6�꣬���в�Ϊ6�ꡣ��ô�ڵڶ����������ǰ�A��������Ϊ6��ȥѧϰ�������ڶ����������ܰ�A�ֵ�6����Ҷ�ӽڵ㣬���ۼ��������Ľ��۾���A����ʵ���䣻�����ڶ������Ľ�����5�꣬��A��Ȼ����1���Ĳв����������A�������ͱ���1�꣬����ѧ��
-</code></pre><p>####3.���������汾<br>��1���в��汾���ѣǣ£ģ�˵��һ�������в�������Ϊÿһ�õ���������ѧϰǰN-1�����Ĳв�����뿴����<a href="http://wenku.baidu.com/view/812fd3247e21af45b307a8b0.html" target="_blank" rel="external">GBDT(MART) �������������Ž̳�</a><br>��2��Gradient�汾���ѣǣģ£�˵��һ���ݶȵ�������ʹ���ݶȵ����½������⣬��Ϊÿһ�õ���������ѧϰǰN-1�������ݶ��½�ֵ�������뿴����<a href="http://blog.csdn.net/dark_scope/article/details/24863289" target="_blank" rel="external"> GBDT(Gradient Boosting Decision Tree) û��ʵ��ֻ��ԭ��</a><br>PS�����ſ����������汾������֮�������ԣǣ£ģ���һ���ܺõ��˽��ˣ���ô���������Ǿ�������xgboost��~</p>
-<h2 id="xgboost"><a href="#xgboost" class="headerlink" title="xgboost"></a>xgboost</h2><h5 id="1-��������-1"><a href="#1-��������-1" class="headerlink" title="1.��������"></a>1.��������</h5><pre><code>xgboost��ȫ����eXtreme Gradient Boosting��Gradient Boosting Machine��һ��c++ʵ�֣�����չ�͸Ľ���GDBT����������Kaggle�����ء�DataCastle��Kesci�ȹ��������ݾ���ƽ̨������Ϊ�ٶȿ�Ч���õ�boostingģ�͡���֧��Python��R��Java��Scala��C++�ȶ��ֱ��̽ӿڡ�
-</code></pre><h5 id="2-�ص�"><a href="#2-�ص�" class="headerlink" title="2.�ص�"></a>2.�ص�</h5><table>
+<p>补充知识点：<br>１.信息熵（）：其定义为离散随机事件出现的概率，一个系统越是有序，信息熵就越低，反之一个系统越是混乱，它的信息熵就越高。可以被认为是系统有序化程度的一个度量。<br>２.信息增益：针对一个一个特征而言的，就是看一个特征，系统有它和没有它时的信息量各是多少，两者的差值就是这个特征给系统带来的信息增益。其容易偏向取值较多的属性。<br><img src="http://images.cnitblog.com/blog/571227/201412/121628452909401.png" alt="信息增益计算公式"><br>3.上述算法仅仅是个简单介绍，具体的可以<a href="http://blog.csdn.net/luo123n/article/details/50149403" target="_blank" rel="external">点击此处进行深入了解</a></p>
+<p>对于决策树我们也有了进一步的了解，那么接下来就来看看xgboost是一个怎样的存在吧~不过深入了解之前我们稍微认识一下xgboost的前生GDBT~</p>
+<h2 id="GBDT（Gradient-boosting-Decision-Tree）"><a href="#GBDT（Gradient-boosting-Decision-Tree）" class="headerlink" title="GBDT（Gradient boosting Decision Tree）"></a>GBDT（Gradient boosting Decision Tree）</h2><h5 id="1-基本概述"><a href="#1-基本概述" class="headerlink" title="1.基本概述"></a>1.基本概述</h5><pre><code>GBDT是以决策树（CART）为基学习器的GB算法，是GB和DT的结合。GBDT中的决策树是回归树，是个弱模型，深度较小一般不会超过5，叶子节点的数量也不会超过10，对于生成的每棵决策树乘上比较小的缩减系数（学习率&lt;0.1），有些GBDT的实现加入了随机抽样（subsample 0.5&lt;=f&lt;=0.8）提高模型的泛化能力。通过交叉验证的方法选择最优的参数。另外，它主要由三个概念组成：Regression Decision Tree（即DT)，Gradient Boosting（即GB)，Shrinkage (算法的一个重要演进分枝，目前大部分源码都按该版本实现）
+</code></pre><h5 id="2-核心"><a href="#2-核心" class="headerlink" title="2.核心"></a>2.核心</h5><pre><code>每一棵树学的是之前所有树结论和的残差，这个残差就是一个加预测值后能得真实值的累加量。例如：A的真实年龄是18岁，但第一棵树的预测年龄是12岁，差了6岁，即残差为6岁。那么在第二棵树里我们把A的年龄设为6岁去学习，如果第二棵树真的能把A分到6岁的叶子节点，那累加两棵树的结论就是A的真实年龄；如果第二棵树的结论是5岁，则A仍然存在1岁的残差，第三棵树里A的年龄就变成1岁，继续学。
+</code></pre><p>####3.两种描述版本<br>（1）残差版本：把ＧＢＤＴ说成一个迭代残差树，认为每一棵迭代树都在学习前N-1棵树的残差，详情请看博客<a href="http://wenku.baidu.com/view/812fd3247e21af45b307a8b0.html" target="_blank" rel="external">GBDT(MART) 迭代决策树入门教程</a><br>（2）Gradient版本：把ＧＤＢＴ说成一个梯度迭代树，使用梯度迭代下降法求解，认为每一棵迭代树都在学习前N-1棵树的梯度下降值，详情请看博客<a href="http://blog.csdn.net/dark_scope/article/details/24863289" target="_blank" rel="external"> GBDT(Gradient Boosting Decision Tree) 没有实现只有原理</a><br>PS：相信看完这两个版本的描述之后你会对ＧＢＤＴ有一个很好的了解了，那么接下来我们就来看看xgboost吧~</p>
+<h2 id="xgboost"><a href="#xgboost" class="headerlink" title="xgboost"></a>xgboost</h2><h5 id="1-基本概述-1"><a href="#1-基本概述-1" class="headerlink" title="1.基本概述"></a>1.基本概述</h5><pre><code>xgboost的全称是eXtreme Gradient Boosting是Gradient Boosting Machine的一个c++实现，它扩展和改进了GDBT，如今风靡Kaggle、天池、DataCastle、Kesci等国内外数据竞赛平台，被称为速度快效果好的boosting模型。其支持Python，R，Java，Scala，C++等多种编程接口。
+</code></pre><h5 id="2-特点"><a href="#2-特点" class="headerlink" title="2.特点"></a>2.特点</h5><table>
 <thead>
 <tr>
-<th>�ص�</th>
-<th>����</th>
+<th>特点</th>
+<th>体现</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>�ٶȿ�</td>
-<td>��һ�������ڱ�Ҫʱռ��һ̨���������������е���ʱһֱ�ܵ��ף�����ֹ���·�����Դ�Ŀ����������ڲ����õ������̷߳�ʽ�����м������٣�����֮��ͨ�Ż���rabitʵ�ֵ�all reduce��ͬ���ӿڡ�</td>
+<td>速度快</td>
+<td>让一个程序在必要时占领一台机器，并且让所有迭代时一直跑到底，来防止重新分配资源的开销；机器内部采用单机多线程方式来并行加速匀速，机器之间通信基于rabit实现的all reduce的同步接口。</td>
 </tr>
 <tr>
-<td>Ч����</td>
-<td>xgboost��ģ�ͺʹ�ͳ��GBDT���ȼ����˶���ģ�͸��ӶȵĿ����Լ����ڵļ�֦������ʹ��ѧϰ������ģ�͸��Ӳ����׹����ϡ�</td>
+<td>效果好</td>
+<td>xgboost的模型和传统的GBDT相比加入了对于模型复杂度的控制以及后期的剪枝处理，使得学习出来的模型更加不容易过拟合。</td>
 </tr>
 <tr>
-<td>���ܶ�</td>
-<td>�ܹ�����Ŀ�꺯�����ݶȺ�Hessian�����������û��ڽ�����֤ʱ�Զ��������������������Լ���������Ҫ�Բ�������״ͼ������ѡ��ʹ������ģ��������ģ�͵�</td>
+<td>功能多</td>
+<td>能够求出目标函数的梯度和Hessian矩阵；允许用户在交叉验证时自定义误差衡量方法；可以计算变量重要性并画出树状图；可以选择使用线性模型替代树模型等</td>
 </tr>
 </tbody>
 </table>
-<h5 id="3-�Z�֮��"><a href="#3-�Z�֮��" class="headerlink" title="3.�Ż�֮��"></a>3.�Ż�֮��</h5><p>��1��xgboost�Դ��ۺ��������˶���̩��չ����ͬʱ�õ���һ�׺Ͷ��׵��������⣬xgboost����֧���Զ������ۺ�����ֻҪ������һ�׺Ͷ����󵼡�<br><img src="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530164744149-143494562.jpg" alt="����̩��"><br>��2��xgboost�ڴ��ۺ�������������������ڿ���ģ�͵ĸ��Ӷȡ�������������������Ҷ�ӽڵ�������ÿ��Ҷ�ӽڵ���������score��L2ģ��ƽ���͡���Bias-variance tradeoff�Ƕ����������������ģ�͵�variance��ʹѧϰ������ģ�͸��Ӽ򵥣���ֹ�����ϡ�<br><img src="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530163025555-653522936.jpg" alt="�˴�����ͼƬ������"><br>��3��xgboost����������ɭ�ֵ�������֧���г����������ܽ��͹����ϣ����ܼ��ټ��㡣<br>��4������������ֵ��ȱʧ��������xgboost�����Զ�ѧϰ�����ķ��ѷ�����<br>��5��xgboost����֧�ֲ��С�<br>��6���ɲ��еĽ���ֱ��ͼ�㷨��</p>
-<p>��������xgboost�Ľ��ܽ����ǳ��������������������и������ط���~</p>
-<p>�ο����ϣ�<br>1.xgboost: �ٶȿ�Ч���õ�boostingģ��<br>2.XGBoostǳ��ǳ��<br>3.һ��һ������GB��GBDT��xgboost<br>4.xgboost������ʵս</p>
+<h5 id="3-优化之处"><a href="#3-优化之处" class="headerlink" title="3.优化之处"></a>3.优化之处</h5><p>（1）xgboost对代价函数进行了二阶泰勒展开，同时用到了一阶和二阶导数。另外，xgboost工具支持自定义代价函数，只要函数可一阶和二阶求导。<br><img src="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530164744149-143494562.jpg" alt="二阶泰勒"><br>（2）xgboost在代价函数里加入了正则项，用于控制模型的复杂度。正则项里包含了树的叶子节点个数、每个叶子节点上输出的score的L2模的平方和。从Bias-variance tradeoff角度来讲，正则项降低了模型的variance，使学习出来的模型更加简单，防止过拟合。<br><img src="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530163025555-653522936.jpg" alt="此处输入图片的描述"><br>（3）xgboost借鉴了随机森林的做法，支持列抽样，不仅能降低过拟合，还能减少计算。<br>（4）对于特征的值有缺失的样本，xgboost可以自动学习出它的分裂方向。<br>（5）xgboost工具支持并行。<br>（6）可并行的近似直方图算法。</p>
+<p>上面对于xgboost的介绍仅仅是初步，接下来会对其进行更深入地分享~</p>
+<p>参考资料：<br>1.xgboost: 速度快效果好的boosting模型<br>2.XGBoost浅入浅出<br>3.一步一步理解GB、GBDT、xgboost<br>4.xgboost导读和实战</p>
 <p>  <a href="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530163025555-653522936.jpg" target="_blank" rel="external">8</a>: <a href="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530163025555-6535229367" target="_blank" rel="external">http://images2015.cnblogs.com/blog/754644/201605/754644-20160530163025555-6535229367</a>]: <a href="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530164744149-143494562.jpg" target="_blank" rel="external">http://images2015.cnblogs.com/blog/754644/201605/754644-20160530164744149-143494562.jpg</a></p>
 
       
@@ -468,7 +468,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/�㷨��GBDT/" rel="tag"># �㷨��GBDT</a>
+            <a href="/tags/算法，GBDT/" rel="tag"># 算法，GBDT</a>
           
         </div>
       
@@ -609,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#������"><span class="nav-number">1.</span> <span class="nav-text">������</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-�������L�������"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">1. �������Ļ�������</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-�������L���"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">2. �������Ĺ���</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-�����㷨"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">3. �����㷨</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GBDT��Gradient-boosting-Decision-Tree��"><span class="nav-number">2.</span> <span class="nav-text">GBDT��Gradient boosting Decision Tree��</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-��������"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">1.��������</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-����"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">2.����</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xgboost"><span class="nav-number">3.</span> <span class="nav-text">xgboost</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-��������-1"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">1.��������</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-�ص�"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">2.�ص�</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-�Z�֮��"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">3.�Ż�֮��</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树"><span class="nav-number">1.</span> <span class="nav-text">决策树</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-决策树的基本概念"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">1. 决策树的基本概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-决策树的构建"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">2. 决策树的构建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-经典算法"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">3. 经典算法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GBDT（Gradient-boosting-Decision-Tree）"><span class="nav-number">2.</span> <span class="nav-text">GBDT（Gradient boosting Decision Tree）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-基本概述"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">1.基本概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-核心"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">2.核心</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xgboost"><span class="nav-number">3.</span> <span class="nav-text">xgboost</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-基本概述-1"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">1.基本概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-特点"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">2.特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-优化之处"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">3.优化之处</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
