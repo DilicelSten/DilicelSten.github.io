@@ -290,7 +290,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/04/基于朴素贝叶斯的兴趣分类/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/06/blog/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="DilicelSten">
@@ -312,8 +312,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/04/04/基于朴素贝叶斯的兴趣分类/" itemprop="url">
-                  未命名
+                <a class="post-title-link" href="/2017/04/06/blog/" itemprop="url">
+                  blog
                 </a>
               
             
@@ -329,8 +329,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-04T22:54:30+08:00">
-                2017-04-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-06T18:50:09+08:00">
+                2017-04-06
               </time>
             
 
@@ -367,18 +367,156 @@
       
         
           
-            <h1 id="基于朴素贝叶斯的兴趣分类"><a href="#基于朴素贝叶斯的兴趣分类" class="headerlink" title="基于朴素贝叶斯的兴趣分类"></a>基于朴素贝叶斯的兴趣分类</h1><p>标签（空格分隔）： NaiveBayes 分类</p>
-<hr>
-<p>寒假期间使用了朴素贝叶斯算法对用户画像中的用户兴趣进行了分类，然而最终预测的准确率以及召回率却不尽如人意，这里就谈谈朴素贝叶斯算法的使用以及我对此次失败的一个小小反思吧~</p>
-<p>#关于分类<br><strong>分类</strong>是将一个<strong>未知样本</strong>分到几个<strong>预先已知类</strong>的过程。在众多的分类模型中，应用最为广泛的两种分类模型是<strong>决策树模型</strong>(Decision Tree Model)和<strong>朴素贝叶斯模型</strong>（Naive Bayesian Model，NBC）。<br>| 分类模型 | 优点    |  缺点 |<br>|  —-    |  —-   | —-  |<br>|决策树|根据决策树可以很容易地构造出规则，而规则通常易于解释和理解；决策树可很好地扩展到大型数据库中，同时它的大小独立于数据库的大小；决策树模型的另外一大优点就是可以对有许多属性的数据集构造决策树。|处理缺失数据时的困难，过度拟合问题的出现，以及忽略数据集中属性之间的相关性等。|<br>|朴素贝叶斯|有稳定的分类效率。对小规模的数据表现很好，能个处理多分类任务，适合增量式训练，尤其是数据量超出内存时，我们可以一批批的去增量训练。对缺失数据不太敏感，算法也比较简单，常用于文本分类。|需要知道先验概率，且先验概率很多时候取决于假设，假设的模型可以有很多种，因此在某些时候会由于假设的先验模型的原因导致预测效果不佳。|</p>
-<p>#关于朴素贝叶斯<br><strong>朴素贝叶斯法</strong>是基于贝叶斯定理与特征条件独立假设的分类方法。朴素贝叶斯分类器模型会给问题实例分配用特征值表示的类标签，类标签取自有限集合。<strong>朴素贝叶斯分类器</strong>基于一个简单的假定：<strong>给定目标值时属性之间相互条件独立</strong>。举个例子，如果一种水果其具有红，圆，直径大概3英寸等特征，该水果可以被判定为是苹果。尽管这些特征相互依赖或者有些特征由其他特征决定，然而朴素贝叶斯分类器认为这些属性在判定该水果是否为苹果的概率分布上独立的。<br>关于朴素贝叶斯的原理网上资料很多，具体内容可以参考此博客：<a href="http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html" target="_blank" rel="external">http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html</a></p>
-<p>#项目思路</p>
-<p>####1.<strong>确定分类</strong><br>我们是按照微博的兴趣分类将兴趣分为24个类别，并赋予特征词大约每个类别500个，将每个类别放置在一个txt文件中<br><img src="http://img.blog.csdn.net/20170210214823996?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzA4NDMyMjE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="此处输入图片的描述"></p>
-<p>####2.<strong>获取标签特征</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">//获取标签特征词(！！发现隐藏文件，由于使用过gedit打开过)，形成一个vocabulary</div><div class="line">		List&lt;String &gt; vocabulary = new ArrayList&lt;String&gt;();</div><div class="line">		File dir = new File(&quot;/home/hadoop/项目内容/类别库&quot;);</div><div class="line">		File[] files = dir.listFiles();   //获取不同类别的标签文件</div><div class="line">		System.out.println(files.length);</div><div class="line">		StringBuilder sb = new StringBuilder();</div><div class="line">		for(File file : files)&#123;</div><div class="line">			BufferedReader br = new BufferedReader(new FileReader(file));</div><div class="line">			String line = null;</div><div class="line">			while((line =  br.readLine()) != null)&#123;</div><div class="line">				sb.append(line);  //按&quot;`&quot;分割不同类别的标签</div><div class="line">			&#125;</div><div class="line">			sb.append(line + &quot;`&quot;);</div><div class="line">		&#125;</div><div class="line">		String[] tags = sb.toString().trim().split(&quot;`&quot;);</div><div class="line">		List&lt;String&gt; newTags = new ArrayList&lt;String&gt;();</div><div class="line">		for(String tag: tags)&#123;</div><div class="line">			if(tag.length() &gt; 4)&#123;</div><div class="line">				newTags.add(tag); //去除空行标签</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		Object[] newtags = newTags.toArray();</div><div class="line">		List&lt;Tuple2&lt;Integer,String&gt;&gt; list = new ArrayList&lt;Tuple2&lt;Integer,String&gt;&gt;();  //记录每类中的标签</div><div class="line">		for(int i = 0; i&lt;newtags.length;i++)&#123;</div><div class="line">			Tuple2&lt;Integer,String&gt; classWithTags = new Tuple2&lt;Integer, String&gt;(i,(String)newtags[i]);</div><div class="line">			System.out.println(classWithTags);</div><div class="line">			list.add(classWithTags);</div><div class="line">			String[] tokens = ((String)newtags[i]).split(&quot;/&quot;);</div><div class="line">			for(String tag: tokens)&#123;</div><div class="line">				vocabulary.add(tag);</div><div class="line">			&#125;</div><div class="line">		&#125;</div></pre></td></tr></table></figure></p>
-<p>####3.<strong>获取训练样本</strong><br>此处的训练样本则为各个分类的特征词~<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//获取训练样本</div><div class="line">		JavaPairRDD&lt;Integer,String&gt; trainRDD = sc.parallelizePairs(list);   //将每类的标签词转化为RDD</div><div class="line">		JavaPairRDD&lt;Integer,String&gt; trainSetRDD = trainRDD.mapValues(new ToTrainSet(vocabulary));  //将标签词转化为向量模型</div><div class="line">		List&lt;Tuple2&lt;Integer,String&gt;&gt; trainSet = trainSetRDD.collect();</div><div class="line">		writeTrainSet(trainSet);  //写成libsvm文件格式，以方便训练</div><div class="line">		System.out.println(&quot;trainset is ok&quot;);</div></pre></td></tr></table></figure></p>
-<p>####4.<strong>训练模型</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//读取训练集并训练模型</div><div class="line">		String path = &quot;./trainset&quot;;</div><div class="line">		JavaRDD&lt;LabeledPoint&gt; trainData = MLUtils.loadLibSVMFile(sc.sc(),path).toJavaRDD();</div><div class="line">		model = NaiveBayes.train(trainData.rdd(),1.0);</div><div class="line">		System.out.println(&quot;model is ok&quot;);</div></pre></td></tr></table></figure></p>
-<p>####5.<strong>预测测试集</strong><br>测试集是挑选每个用户关注的大V及其简介， 利用HanLP进行切词<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//读取txt文件并利用hanlp切词形成一个list，作为测试样本</div><div class="line">		String filepath = &quot;/home/hadoop/result/19岁金鱼想当歌手.txt&quot;;</div><div class="line">		File inputfile = new File(filepath);</div><div class="line">		rewriteFile(filepath);</div><div class="line">		String content = readTxtFile(inputfile); //获取txt的内容</div><div class="line">		System.out.print(content);</div><div class="line">		Segment segment = HanLP.newSegment();</div><div class="line">		List&lt;Term&gt; termList = segment.seg(content); //用Hanlp进行切词形成List</div><div class="line">		for(Term term : termList)&#123;</div><div class="line">            testStr += term.word + &quot; &quot;;  //使用term.word去掉属性部分</div><div class="line">        &#125;</div><div class="line">//预测测试集</div><div class="line">		double[] testArray = sentenceToArrays(vocabulary,testStr);</div><div class="line">		writeTestSet(testArray);</div><div class="line">		String testPath = &quot;./testset&quot;;</div><div class="line">		JavaRDD&lt;LabeledPoint&gt; testData = MLUtils.loadLibSVMFile(sc.sc(), testPath).toJavaRDD();</div></pre></td></tr></table></figure></p>
-<p>####6.<strong>选取概率值前三的兴趣存档</strong><br>即每个用户确定3个兴趣</p>
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/05/基于朴素贝叶斯的兴趣分类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DilicelSten">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/05/基于朴素贝叶斯的兴趣分类/" itemprop="url">
+                  基于朴素贝叶斯的兴趣分类
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-05T18:50:09+08:00">
+                2017-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>寒假期间使用了朴素贝叶斯算法对用户画像中的用户兴趣进行了分类，然而最终预测的准确率以及召回率却不尽如人意，这里就谈谈朴素贝叶斯算法的使用以及我对此次失败的一个小小反思吧~</p>
+<h1 id="关于分类"><a href="#关于分类" class="headerlink" title="关于分类"></a>关于分类</h1><p><strong>分类</strong>是将一个<strong>未知样本</strong>分到几个<strong>预先已知类</strong>的过程。在众多的分类模型中，应用最为广泛的两种分类模型是<strong>决策树模型</strong>(Decision Tree Model)和<strong>朴素贝叶斯模型</strong>（Naive Bayesian Model，NBC）。</p>
+<table>
+<thead>
+<tr>
+<th>分类模型</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>决策树</td>
+<td>根据决策树可以很容易地构造出规则，而规则通常易于解释和理解；决策树可很好地扩展到大型数据库中，同时它的大小独立于数据库的大小；决策树模型的另外一大优点就是可以对有许多属性的数据集构造决策树。</td>
+<td>处理缺失数据时的困难，过度拟合问题的出现，以及忽略数据集中属性之间的相关性等。</td>
+</tr>
+<tr>
+<td>朴素贝叶斯</td>
+<td>有稳定的分类效率。对小规模的数据表现很好，能个处理多分类任务，适合增量式训练，尤其是数据量超出内存时，我们可以一批批的去增量训练。对缺失数据不太敏感，算法也比较简单，常用于文本分类。</td>
+<td>需要知道先验概率，且先验概率很多时候取决于假设，假设的模型可以有很多种，因此在某些时候会由于假设的先验模型的原因导致预测效果不佳。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="关于朴素贝叶斯"><a href="#关于朴素贝叶斯" class="headerlink" title="关于朴素贝叶斯"></a>关于朴素贝叶斯</h1><p><strong>朴素贝叶斯法</strong>是基于贝叶斯定理与特征条件独立假设的分类方法。朴素贝叶斯分类器模型会给问题实例分配用特征值表示的类标签，类标签取自有限集合。<strong>朴素贝叶斯分类器</strong>基于一个简单的假定：<strong>给定目标值时属性之间相互条件独立</strong>。举个例子，如果一种水果其具有红，圆，直径大概3英寸等特征，该水果可以被判定为是苹果。尽管这些特征相互依赖或者有些特征由其他特征决定，然而朴素贝叶斯分类器认为这些属性在判定该水果是否为苹果的概率分布上独立的。<br>关于朴素贝叶斯的原理网上资料很多，具体内容可以参考此博客：<a href="http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html" target="_blank" rel="external">http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html</a></p>
+<h1 id="项目思路"><a href="#项目思路" class="headerlink" title="项目思路"></a>项目思路</h1><h4 id="1-确定分类"><a href="#1-确定分类" class="headerlink" title="1.确定分类"></a>1.<strong>确定分类</strong></h4><p>我们是按照微博的兴趣分类将兴趣分为24个类别，并赋予特征词大约每个类别500个，将每个类别放置在一个txt文件中<br><img src="http://img.blog.csdn.net/20170210214823996?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzA4NDMyMjE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="此处输入图片的描述"></p>
+<h4 id="2-获取标签特征"><a href="#2-获取标签特征" class="headerlink" title="2.获取标签特征"></a>2.<strong>获取标签特征</strong></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获取标签特征词(！！发现隐藏文件，由于使用过gedit打开过)，形成一个vocabulary</span></div><div class="line">		List&lt;String &gt; vocabulary = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		File dir = <span class="keyword">new</span> File(<span class="string">"/home/hadoop/项目内容/类别库"</span>);</div><div class="line">		File[] files = dir.listFiles();   <span class="comment">//获取不同类别的标签文件</span></div><div class="line">		System.out.println(files.length);</div><div class="line">		StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">		<span class="keyword">for</span>(File file : files)&#123;</div><div class="line">			BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(file));</div><div class="line">			String line = <span class="keyword">null</span>;</div><div class="line">			<span class="keyword">while</span>((line =  br.readLine()) != <span class="keyword">null</span>)&#123;</div><div class="line">				sb.append(line);  <span class="comment">//按"`"分割不同类别的标签</span></div><div class="line">			&#125;</div><div class="line">			sb.append(line + <span class="string">"`"</span>);</div><div class="line">		&#125;</div><div class="line">		String[] tags = sb.toString().trim().split(<span class="string">"`"</span>);</div><div class="line">		List&lt;String&gt; newTags = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		<span class="keyword">for</span>(String tag: tags)&#123;</div><div class="line">			<span class="keyword">if</span>(tag.length() &gt; <span class="number">4</span>)&#123;</div><div class="line">				newTags.add(tag); <span class="comment">//去除空行标签</span></div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		Object[] newtags = newTags.toArray();</div><div class="line">		List&lt;Tuple2&lt;Integer,String&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;Tuple2&lt;Integer,String&gt;&gt;();  <span class="comment">//记录每类中的标签</span></div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;newtags.length;i++)&#123;</div><div class="line">			Tuple2&lt;Integer,String&gt; classWithTags = <span class="keyword">new</span> Tuple2&lt;Integer, String&gt;(i,(String)newtags[i]);</div><div class="line">			System.out.println(classWithTags);</div><div class="line">			list.add(classWithTags);</div><div class="line">			String[] tokens = ((String)newtags[i]).split(<span class="string">"/"</span>);</div><div class="line">			<span class="keyword">for</span>(String tag: tokens)&#123;</div><div class="line">				vocabulary.add(tag);</div><div class="line">			&#125;</div><div class="line">		&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-获取训练样本"><a href="#3-获取训练样本" class="headerlink" title="3.获取训练样本"></a>3.<strong>获取训练样本</strong></h4><p>此处的训练样本则为各个分类的特征词~<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获取训练样本</span></div><div class="line">		JavaPairRDD&lt;Integer,String&gt; trainRDD = sc.parallelizePairs(list);   <span class="comment">//将每类的标签词转化为RDD</span></div><div class="line">		JavaPairRDD&lt;Integer,String&gt; trainSetRDD = trainRDD.mapValues(<span class="keyword">new</span> ToTrainSet(vocabulary));  <span class="comment">//将标签词转化为向量模型</span></div><div class="line">		List&lt;Tuple2&lt;Integer,String&gt;&gt; trainSet = trainSetRDD.collect();</div><div class="line">		writeTrainSet(trainSet);  <span class="comment">//写成libsvm文件格式，以方便训练</span></div><div class="line">		System.out.println(<span class="string">"trainset is ok"</span>);</div></pre></td></tr></table></figure></p>
+<h4 id="4-训练模型"><a href="#4-训练模型" class="headerlink" title="4.训练模型"></a>4.<strong>训练模型</strong></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//读取训练集并训练模型</span></div><div class="line">		String path = <span class="string">"./trainset"</span>;</div><div class="line">		JavaRDD&lt;LabeledPoint&gt; trainData = MLUtils.loadLibSVMFile(sc.sc(),path).toJavaRDD();</div><div class="line">		model = NaiveBayes.train(trainData.rdd(),<span class="number">1.0</span>);</div><div class="line">		System.out.println(<span class="string">"model is ok"</span>);</div></pre></td></tr></table></figure>
+<h4 id="5-预测测试集"><a href="#5-预测测试集" class="headerlink" title="5.预测测试集"></a>5.<strong>预测测试集</strong></h4><p>测试集是挑选每个用户关注的大V及其简介， 利用HanLP进行切词<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//读取txt文件并利用hanlp切词形成一个list，作为测试样本</span></div><div class="line">		String filepath = <span class="string">"/home/hadoop/result/19岁金鱼想当歌手.txt"</span>;</div><div class="line">		File inputfile = <span class="keyword">new</span> File(filepath);</div><div class="line">		rewriteFile(filepath);</div><div class="line">		String content = readTxtFile(inputfile); <span class="comment">//获取txt的内容</span></div><div class="line">		System.out.print(content);</div><div class="line">		Segment segment = HanLP.newSegment();</div><div class="line">		List&lt;Term&gt; termList = segment.seg(content); <span class="comment">//用Hanlp进行切词形成List</span></div><div class="line">		<span class="keyword">for</span>(Term term : termList)&#123;</div><div class="line">            testStr += term.word + <span class="string">" "</span>;  <span class="comment">//使用term.word去掉属性部分</span></div><div class="line">        &#125;</div><div class="line"><span class="comment">//预测测试集</span></div><div class="line">		<span class="keyword">double</span>[] testArray = sentenceToArrays(vocabulary,testStr);</div><div class="line">		writeTestSet(testArray);</div><div class="line">		String testPath = <span class="string">"./testset"</span>;</div><div class="line">		JavaRDD&lt;LabeledPoint&gt; testData = MLUtils.loadLibSVMFile(sc.sc(), testPath).toJavaRDD();</div></pre></td></tr></table></figure></p>
+<h4 id="6-选取概率值前三的兴趣存档"><a href="#6-选取概率值前三的兴趣存档" class="headerlink" title="6.选取概率值前三的兴趣存档"></a>6.<strong>选取概率值前三的兴趣存档</strong></h4><p>即每个用户确定3个兴趣</p>
 <p>#预测效果<br>对每个用户的兴趣进行分类后，为了验证算法的准确率以及召回率，我是随机选择了500个用户进行人工标注其兴趣，兴趣的个数不限，后利用公式<br><img src="http://oh4g14vir.bkt.clouddn.com/%E9%A2%84%E6%B5%8B%E5%85%AC%E7%A4%BA.jpg" alt="此处输入图片的描述"><br>代码实现如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">Map&lt;String,String&gt; human = new HashMap&lt;String,String&gt;();</div><div class="line">		Map&lt;String,String&gt; predict = new HashMap&lt;String,String&gt;();</div><div class="line">		String humanpath = &quot;/home/hadoop/Seeing项目内容/result/人工标注/人工标注用户&quot;;</div><div class="line">		String predictpath = &quot;/home/hadoop/Seeing项目内容/result/人工标注/新机器&quot;;</div><div class="line">		//将人工标注的放于human中</div><div class="line">		BufferedReader human_br = new BufferedReader(new FileReader(new File(humanpath)));</div><div class="line">		String human_interest = &quot;&quot;;</div><div class="line">		while((human_interest = human_br.readLine()) != null)&#123;</div><div class="line">			String[] content = human_interest.split(&quot;	&quot;);</div><div class="line">			human.put(content[0], content[1]);		</div><div class="line">			&#125;</div><div class="line">		//将机器标注的放于predict中</div><div class="line">		BufferedReader predict_br = new BufferedReader(new FileReader(new File(predictpath)));</div><div class="line">		String predict_interest = &quot;&quot;;</div><div class="line">		while((predict_interest = predict_br.readLine()) != null)&#123;</div><div class="line">			String[] content1 = predict_interest.split(&quot;	&quot;);</div><div class="line">			predict.put(content1[0], content1[1]);</div><div class="line">		&#125;</div><div class="line">		//计算准确率和召回率</div><div class="line">		//先转成set</div><div class="line">		Set human_set = human.entrySet();</div><div class="line">		Set predict_set = predict.entrySet();</div><div class="line">		int i  = 0;</div><div class="line">		double accuracy = 0;</div><div class="line">		double recall = 0;</div><div class="line">		for(Iterator iter1 = predict_set.iterator(); iter1.hasNext();)&#123;</div><div class="line">			String[] predictinterests = &#123;&#125;;</div><div class="line">			String[] humaninterests = &#123;&#125;;</div><div class="line">			//交集个数</div><div class="line">			double  result_insect =0;</div><div class="line">			Map.Entry&lt;String , String&gt; entry1 = (Map.Entry&lt;String, String&gt;) iter1.next();</div><div class="line">			String predictkey = entry1.getKey();</div><div class="line">			String predictvalue = entry1.getValue();</div><div class="line">			predictinterests = predictvalue.split(&quot;,&quot;);</div><div class="line">			for(Iterator iter2 = human_set.iterator();iter2.hasNext();)&#123;</div><div class="line">				Map.Entry&lt;String, String&gt; entry2 = (Map.Entry&lt;String, String&gt;) iter2.next();</div><div class="line">				String humankey = entry2.getKey();</div><div class="line">				String humanvalue = entry2.getValue();</div><div class="line">//				System.out.println(humanvalue);</div><div class="line">				humaninterests = humanvalue.split(&quot;,&quot;);</div><div class="line">				if(humankey.equals(predictkey))&#123;</div><div class="line">					//求交集</div><div class="line">					i++;</div><div class="line">					result_insect = intersect(predictinterests, humaninterests);</div><div class="line">//					System.out.println(result_insect);</div><div class="line">					double a = predictinterests.length;</div><div class="line">					double b = humaninterests.length;</div><div class="line">					accuracy = (result_insect/predictinterests.length + accuracy*(i-1))/i;</div><div class="line">					recall =( result_insect/humaninterests.length + recall *(i-1))/i;</div><div class="line">//					System.out.println(i+ &quot; &quot;+ result_insect + &quot; &quot;+ a + &quot; &quot;+ b);</div><div class="line">				&#125;</div></pre></td></tr></table></figure></p>
 <p>结果如图：<br><img src="http://oh4g14vir.bkt.clouddn.com/%E5%87%86%E7%A1%AE%E7%8E%87.jpg" alt="此处输入图片的描述"></p>
 <p>#反思<br>准确率和召回率都惊人的低，个人感觉原因应该有以下几点：<br>1.人工标注会有些疏忽，另外就是微博兴趣的特征词所构建的词典会随时间的问题有一些特征词不再适用；<br>2.朴素贝叶斯本身的缺点导致，由于我们是通过先验和数据来决定后验的概率从而决定分类，所以分类决策存在一定的错误率。<br>3.朴素贝叶斯模型假设属性之间相互独立，这个假设在实际应用中往往是不成立的，在属性个数比较多或者属性之间相关性较大时，分类效果不好。而在属性相关性较小时，朴素贝叶斯性能最为良好。对于这一点，有半朴素贝叶斯之类的算法通过考虑部分关联性适度改进。</p>
@@ -591,7 +729,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
