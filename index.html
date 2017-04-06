@@ -564,6 +564,198 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/25/xgboost/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DilicelSten">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DilicelSten's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/25/xgboost/" itemprop="url">
+                  xgboost��һ����С�׵�ѧϰ����
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-25T00:20:24+08:00">
+                2016-11-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>�̶����죬һ��ʼ�Ծ�����������İ�����������Ͻ���һ����ɨ����֮�����ж������صļ������ͣ��Ը������ʽ����������˽⣬Ҳ½½�����������Լ���˼·����������̸̸�⼸���Ҷ�������ʲô��~<br>Ϊ���ܶ�xgboost��һ�����õ���ʶ���һ��ǰ�֮ǰ��������Щ�������顶�����ھ�ԭ����ʵ�����ó�����һ�������е�3���ж��ھ������Ļ�������������������㷨���н���ϸ�Ľ�˵<a href="https://www.amazon.cn/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E8%92%8B%E7%9B%9B%E7%9B%8A/dp/B005M1LXLC" target="_blank" rel="external">�����˽����飬�ɵ����˴�</a>���������ҽ����������ֽ��м�Ҫ�Ĳ�����</p>
+<h2 id="������"><a href="#������" class="headerlink" title="������"></a>������</h2><h5 id="1-�������L�������"><a href="#1-�������L�������" class="headerlink" title="1. �������Ļ�������"></a>1. �������Ļ�������</h5><p>��������Decision Tree����һ�����ͽṹ���������߽ڵ㣨�ڲ��ڵ㣩����֧��Ҷ�ڵ������֡���Ϊһ��Ԥ��ģ�ͣ����������Ƕ�������������ֵ֮����һ��ӳ����ϵ������ÿ���ڵ���ʾĳ�����󣬶�ÿ���ֲ�·����������ĳ�����ܵ�����ֵ����ÿ��Ҷ��������Ӧ�Ӹ��ڵ㵽��Ҷ�ڵ���������·������ʾ�Ķ�����ֵ����ͼ���ܻ�������?????<br><img src="http://7xiht5.com1.z0.glb.clouddn.com/blog_animal_classification.png" alt="ͼ��"><br>    ����������������δ֪�������з��࣬�����������£��Ӿ������ĸ��ڵ㿪ʼ��������������ĳ����֧����������ֱ��Ҷ�ڵ㣬��Ҷ�ڵ���������ֵ��Ϊ��δ֪�������������š�</p>
+<h5 id="2-�������L���"><a href="#2-�������L���" class="headerlink" title="2. �������Ĺ���"></a>2. �������Ĺ���</h5><p> ������������Ҫ���������棺<br>    ��1��ѡ���ʵ�������Ϊ�������Ľڵ�<br>    ��2�����ʵ���λ��ֹͣ���ֹ���</p>
+<h5 id="3-�����㷨"><a href="#3-�����㷨" class="headerlink" title="3. �����㷨"></a>3. �����㷨</h5><pre><code>��Ҫ��ID3�㷨��Iterative Dichotomiser 3����C4.5�㷨��CART�㷨(�����ع���)�Լ�Random Forest������ͨ������������4���㷨�����˽��ɣ�~
+</code></pre><table>
+<thead>
+<tr>
+<th>�����㷨</th>
+<th>����ѡ����׼</th>
+<th>ʹ�÷���</th>
+<th>�ص�</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID3</td>
+<td>��Ϣ����</td>
+<td>�Զ����µ�̰�Ĳ���</td>
+<td>ֻ�ܴ��������������ݣ����ֹ��������������Ӽ���ģ��С����ͳ�����������ֶ�ֹͣ��������ѡ����׼���ܵ��¹������ϡ�</td>
+</tr>
+<tr>
+<td>C4.5</td>
+<td>��Ϣ������</td>
+<td>���ۼ�֦</td>
+<td>��Ϊ����������������ֻ���Ƿ����ͣ��ܹ����������ͺ���ɢ���������ݣ���ȱʧֵ������ֱ�ӷ��䵽���������ķ�֧���������ɵ������к���֦���������ڹ����������������ݼ����ж��ε�˳��ɨ�����������Ҳ����ľ����������ȶ���</td>
+</tr>
+<tr>
+<td>CART</td>
+<td>Giniϵ��</td>
+<td>��Ԫ�ݹ黮�ַ���/���۸����Լ�֦��</td>
+<td>���ɵ���һ��������������������������Ϊ�����ͻ���ֵ�ͣ�����ÿһ���ľ���ʱֻ���ǡ��ǡ����ߡ�����,���ô������Դ���ȱʧֵ������Ԥ��֦�ͺ���֦�����ϵķ�ʽ��֦</td>
+</tr>
+<tr>
+<td>Random Forest</td>
+<td>����</td>
+<td>����ѡ�񷽷�</td>
+<td>���������������ķ�����,ÿ�þ�����֮����û�й�����,�������������ϵ�����������ʵ�ֲ��л����㡣</td>
+</tr>
+</tbody>
+</table>
+<p>����֪ʶ�㣺<br>��.��Ϣ�أ������䶨��Ϊ��ɢ�����¼����ֵĸ��ʣ�һ��ϵͳԽ����������Ϣ�ؾ�Խ�ͣ���֮һ��ϵͳԽ�ǻ��ң�������Ϣ�ؾ�Խ�ߡ����Ա���Ϊ��ϵͳ���򻯳̶ȵ�һ��������<br>��.��Ϣ���棺����һ��һ���������Եģ����ǿ�һ��������ϵͳ������û����ʱ����Ϣ�����Ƕ��٣����ߵĲ�ֵ��������������ϵͳ��������Ϣ���档������ƫ��ȡֵ�϶������ԡ�<br><img src="http://images.cnitblog.com/blog/571227/201412/121628452909401.png" alt="��Ϣ�������㹫ʽ"><br>3.�����㷨�����Ǹ��򵥽��ܣ������Ŀ���<a href="http://blog.csdn.net/luo123n/article/details/50149403" target="_blank" rel="external">�����˴����������˽�</a></p>
+<p>���ھ���������Ҳ���˽�һ�����˽⣬��ô��������������xgboost��һ�������Ĵ��ڰ�~���������˽�֮ǰ������΢��ʶһ��xgboost��ǰ��GDBT~</p>
+<h2 id="GBDT��Gradient-boosting-Decision-Tree��"><a href="#GBDT��Gradient-boosting-Decision-Tree��" class="headerlink" title="GBDT��Gradient boosting Decision Tree��"></a>GBDT��Gradient boosting Decision Tree��</h2><h5 id="1-��������"><a href="#1-��������" class="headerlink" title="1.��������"></a>1.��������</h5><pre><code>GBDT���Ծ�������CART��Ϊ��ѧϰ����GB�㷨����GB��DT�Ľ��ϡ�GBDT�еľ������ǻع������Ǹ���ģ�ͣ����Ƚ�Сһ�㲻�ᳬ��5��Ҷ�ӽڵ�������Ҳ���ᳬ��10���������ɵ�ÿ�þ��������ϱȽ�С������ϵ����ѧϰ��&lt;0.1������ЩGBDT��ʵ�ּ���������������subsample 0.5&lt;=f&lt;=0.8������ģ�͵ķ���������ͨ��������֤�ķ���ѡ�����ŵĲ��������⣬����Ҫ�������������ɣ�Regression Decision Tree����DT)��Gradient Boosting����GB)��Shrinkage (�㷨��һ����Ҫ�ݽ���֦��Ŀǰ�󲿷�Դ�붼���ð汾ʵ�֣�
+</code></pre><h5 id="2-����"><a href="#2-����" class="headerlink" title="2.����"></a>2.����</h5><pre><code>ÿһ����ѧ����֮ǰ���������ۺ͵Ĳв�����в�����һ����Ԥ��ֵ���ܵ���ʵֵ���ۼ��������磺A����ʵ������18�꣬����һ������Ԥ��������12�꣬����6�꣬���в�Ϊ6�ꡣ��ô�ڵڶ����������ǰ�A��������Ϊ6��ȥѧϰ�������ڶ����������ܰ�A�ֵ�6����Ҷ�ӽڵ㣬���ۼ��������Ľ��۾���A����ʵ���䣻�����ڶ������Ľ�����5�꣬��A��Ȼ����1���Ĳв����������A�������ͱ���1�꣬����ѧ��
+</code></pre><p>####3.���������汾<br>��1���в��汾���ѣǣ£ģ�˵��һ�������в�������Ϊÿһ�õ���������ѧϰǰN-1�����Ĳв�����뿴����<a href="http://wenku.baidu.com/view/812fd3247e21af45b307a8b0.html" target="_blank" rel="external">GBDT(MART) �������������Ž̳�</a><br>��2��Gradient�汾���ѣǣģ£�˵��һ���ݶȵ�������ʹ���ݶȵ����½������⣬��Ϊÿһ�õ���������ѧϰǰN-1�������ݶ��½�ֵ�������뿴����<a href="http://blog.csdn.net/dark_scope/article/details/24863289" target="_blank" rel="external"> GBDT(Gradient Boosting Decision Tree) û��ʵ��ֻ��ԭ��</a><br>PS�����ſ����������汾������֮�������ԣǣ£ģ���һ���ܺõ��˽��ˣ���ô���������Ǿ�������xgboost��~</p>
+<h2 id="xgboost"><a href="#xgboost" class="headerlink" title="xgboost"></a>xgboost</h2><h5 id="1-��������-1"><a href="#1-��������-1" class="headerlink" title="1.��������"></a>1.��������</h5><pre><code>xgboost��ȫ����eXtreme Gradient Boosting��Gradient Boosting Machine��һ��c++ʵ�֣�����չ�͸Ľ���GDBT����������Kaggle�����ء�DataCastle��Kesci�ȹ��������ݾ���ƽ̨������Ϊ�ٶȿ�Ч���õ�boostingģ�͡���֧��Python��R��Java��Scala��C++�ȶ��ֱ��̽ӿڡ�
+</code></pre><h5 id="2-�ص�"><a href="#2-�ص�" class="headerlink" title="2.�ص�"></a>2.�ص�</h5><table>
+<thead>
+<tr>
+<th>�ص�</th>
+<th>����</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>�ٶȿ�</td>
+<td>��һ�������ڱ�Ҫʱռ��һ̨���������������е���ʱһֱ�ܵ��ף�����ֹ���·�����Դ�Ŀ����������ڲ����õ������̷߳�ʽ�����м������٣�����֮��ͨ�Ż���rabitʵ�ֵ�all reduce��ͬ���ӿڡ�</td>
+</tr>
+<tr>
+<td>Ч����</td>
+<td>xgboost��ģ�ͺʹ�ͳ��GBDT���ȼ����˶���ģ�͸��ӶȵĿ����Լ����ڵļ�֦������ʹ��ѧϰ������ģ�͸��Ӳ����׹����ϡ�</td>
+</tr>
+<tr>
+<td>���ܶ�</td>
+<td>�ܹ�����Ŀ�꺯�����ݶȺ�Hessian�����������û��ڽ�����֤ʱ�Զ��������������������Լ���������Ҫ�Բ�������״ͼ������ѡ��ʹ������ģ��������ģ�͵�</td>
+</tr>
+</tbody>
+</table>
+<h5 id="3-�Z�֮��"><a href="#3-�Z�֮��" class="headerlink" title="3.�Ż�֮��"></a>3.�Ż�֮��</h5><p>��1��xgboost�Դ��ۺ��������˶���̩��չ����ͬʱ�õ���һ�׺Ͷ��׵��������⣬xgboost����֧���Զ������ۺ�����ֻҪ������һ�׺Ͷ����󵼡�<br><img src="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530164744149-143494562.jpg" alt="����̩��"><br>��2��xgboost�ڴ��ۺ�������������������ڿ���ģ�͵ĸ��Ӷȡ�������������������Ҷ�ӽڵ�������ÿ��Ҷ�ӽڵ���������score��L2ģ��ƽ���͡���Bias-variance tradeoff�Ƕ����������������ģ�͵�variance��ʹѧϰ������ģ�͸��Ӽ򵥣���ֹ�����ϡ�<br><img src="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530163025555-653522936.jpg" alt="�˴�����ͼƬ������"><br>��3��xgboost����������ɭ�ֵ�������֧���г����������ܽ��͹����ϣ����ܼ��ټ��㡣<br>��4������������ֵ��ȱʧ��������xgboost�����Զ�ѧϰ�����ķ��ѷ�����<br>��5��xgboost����֧�ֲ��С�<br>��6���ɲ��еĽ���ֱ��ͼ�㷨��</p>
+<p>��������xgboost�Ľ��ܽ����ǳ��������������������и������ط���~</p>
+<p>�ο����ϣ�<br>1.xgboost: �ٶȿ�Ч���õ�boostingģ��<br>2.XGBoostǳ��ǳ��<br>3.һ��һ������GB��GBDT��xgboost<br>4.xgboost������ʵս</p>
+<p>  <a href="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530163025555-653522936.jpg" target="_blank" rel="external">8</a>: <a href="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530163025555-6535229367" target="_blank" rel="external">http://images2015.cnblogs.com/blog/754644/201605/754644-20160530163025555-6535229367</a>]: <a href="http://images2015.cnblogs.com/blog/754644/201605/754644-20160530164744149-143494562.jpg" target="_blank" rel="external">http://images2015.cnblogs.com/blog/754644/201605/754644-20160530164744149-143494562.jpg</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -609,7 +801,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
